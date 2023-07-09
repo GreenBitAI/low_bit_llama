@@ -27,7 +27,7 @@ The model size of LLaMA-7B shrinks from 12.5 GB (FP16) to 2.2GB (2 bits).
 
 ## Requirements
 
-The inference currently requires a machine with CUDA installed.
+The inference currently requires a machine with CUDA (tested with 11.7) installed.
 Then you can simply run:
 
 ```bash
