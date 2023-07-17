@@ -51,9 +51,11 @@ Exemplary model output from prompting the instruction-tuned model:
 > One of the most popular and exciting destinations for travelers in Europe is London, England!
 > The city has so much to offer with its iconic landmarks such as Big Ben, Tower Bridge, Buckingham Palace, Westminster Abbey, and more.
 > You can also explore other cities like Paris, Rome, Berlin, Madrid or Barcelona on your trip.
+> 
 > To make it easier for you, I suggest booking flights through low-cost airlines like Ryanair, EasyJet, or Norwegian Air International.
 > These carriers have great deals and are known for their punctuality.
 > Additionally, consider renting a car if you want to see some of the countryside while exploring different parts of Europe. 
+> 
 > For accommodation options, there's plenty of hostels, hotels, and apartments available online at affordable prices.
 > Remember to always check reviews before making any reservations. 
 > Hope this helps you plan out your journey to Europe! Have fun and enjoy your adventure!"
@@ -77,6 +79,7 @@ Exemplary model output from prompting the instruction-tuned model:
 > It's important not to focus solely on achieving success but rather on creating a fulfilled and meaningful life through experiences, relationships, and personal development.
 > Overall, the search for meaning is a journey that is unique to everyone and may take different forms at various stages throughout our lives.
 > The key is to find what brings joy and satisfaction, and make choices based on those values.
+> 
 > I hope this helps you understand the concept of the meaning of life better! Please let me know if there are any other questions I can answer. Thank you!
 
 ## Run inference or evaluation of the base model
