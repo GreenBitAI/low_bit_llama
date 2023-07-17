@@ -1,5 +1,6 @@
 import math
 import time
+from pathlib import Path
 
 import torch
 import torch.nn as nn
@@ -9,9 +10,7 @@ from huggingface_hub import hf_hub_download
 init(autoreset=True)
 
 
-# Assumes layer is perfectly divisible into 256 * 256 blocks
 class QuantLinear(nn.Module):
-
     def __init__(self, in_features, out_features, groupsize=-1, bits=4):
         super().__init__()
         bits=bits
@@ -125,6 +124,88 @@ def load_llama_model(model_uri, cache_dir, groupsize=-1, bits=4, half=False, dev
 
     if half:
         model_to_half(model)
+
+    tokenizer = LlamaTokenizer.from_pretrained(model_uri, cache_dir=cache_dir)
+    tokenizer.truncation_side = 'left'
+
+    print(Style.BRIGHT + Fore.GREEN + f"Loaded the model in {(time.time()-t0):.2f} seconds.")
+
+    return model, tokenizer
+
+
+def load_llama_model_lora(model_uri, lora_uri, cache_dir, bits = 32, groupsize=-1, device_map="auto", seqlen=2048, max_memory=None):
+    import accelerate
+    from transformers import LlamaConfig, LlamaForCausalLM, LlamaTokenizer
+    
+    if max_memory is None:
+        max_memory = {0: '24Gib', 'cpu': '48Gib'}
+
+    print(Style.BRIGHT + Fore.CYAN + "Loading Model ...")
+    t0 = time.time()
+
+    with accelerate.init_empty_weights():
+        config = LlamaConfig.from_pretrained(model_uri, cache_dir=cache_dir)
+        model = LlamaForCausalLM(config)
+        model = model.eval()
+        layers = find_layers(model)
+        for name in ['lm_head']:
+            if name in layers:
+                del layers[name]
+        make_quant(model, layers, groupsize=groupsize, bits = bits)
+
+    accelerate.load_checkpoint_in_model(
+        model,
+        checkpoint=hf_hub_download(repo_id=model_uri, filename="pytorch_model.bin", cache_dir=cache_dir),
+        device_map={'': 'cpu'}
+    )
+
+    model.seqlen = seqlen
+    # rotary_emb fix
+    for n, m in model.named_modules():
+        if 'rotary_emb' in n:
+            cos_cached = m.cos_cached.clone().cpu()
+            sin_cached = m.sin_cached.clone().cpu()
+            break
+
+    from peft import PeftModel
+    from peft_tuners_lora import LinearLowbitLt
+
+    _ = hf_hub_download(repo_id=lora_uri, filename="adapter_config.json", cache_dir=cache_dir)
+    lora_model = hf_hub_download(repo_id=lora_uri, filename="adapter_model.bin", cache_dir=cache_dir)
+    lora_path = Path(lora_model).parent
+
+    model = PeftModel.from_pretrained(model, lora_path, device_map={'': 'cpu'}, torch_dtype=torch.float32, is_trainable=True)
+    print(Style.BRIGHT + Fore.GREEN + '{} Lora Applied.'.format(lora_path))
+
+    model.seqlen = seqlen
+
+    print('Apply half ...')
+    for n, m in model.named_modules():
+        if isinstance(m, QuantLinear) or ((lora_path is not None) and isinstance(m, LinearLowbitLt)):
+            m.qscales_scales=m.qscales_scales.half()
+            m.qscales_zeros=m.qscales_zeros.half()
+            if m.bias is not None:
+                m.bias = m.bias.half()
+
+    print('Dispatching model ...')
+    device_map = accelerate.infer_auto_device_map(model, max_memory=max_memory, no_split_module_classes=["LlamaDecoderLayer"])
+    model = accelerate.dispatch_model(model, device_map=device_map, offload_buffers=True, main_device=0)
+    torch.cuda.empty_cache()
+    print(Style.BRIGHT + Fore.YELLOW + 'Total {:.2f} Gib VRAM used.'.format(torch.cuda.memory_allocated() / 1024 / 1024))
+
+    # rotary_emb fix
+    for n, m in model.named_modules():
+        if 'rotary_emb' in n:
+            if getattr(m, '_hf_hook', None):
+                if isinstance(m._hf_hook, accelerate.hooks.SequentialHook):
+                    hooks = m._hf_hook.hooks
+                else:
+                    hooks = [m._hf_hook]
+                for hook in hooks:
+                    if hook.offload:
+                        if n + '.sin_cached' not in hook.weights_map.dataset.state_dict.keys():
+                            hook.weights_map.dataset.state_dict[n + '.sin_cached'] = sin_cached.clone().cpu()
+                            hook.weights_map.dataset.state_dict[n + '.cos_cached'] = cos_cached.clone().cpu()
 
     tokenizer = LlamaTokenizer.from_pretrained(model_uri, cache_dir=cache_dir)
     tokenizer.truncation_side = 'left'
