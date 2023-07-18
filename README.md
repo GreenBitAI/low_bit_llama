@@ -12,7 +12,7 @@ Additionally, we are considering the provision of low-bit versions for other ope
 
 ## Results
 
-The model size of LLaMA-7B shrinks from 12.5 GB (FP16) to 2.2 GiB (2 bits).
+The model size of LLaMA-7B shrinks from 12.5 GiB (FP16) to 2.2 GiB (2 bits).
 
 | [LLaMA-7B](https://arxiv.org/abs/2302.13971) | Bits | Wikitext2 | C4   | PTB   | checkpoint size (GiB) |
 |----------------------------------------------|------|-----------|------|-------|-----------------------|
