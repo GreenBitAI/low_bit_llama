@@ -21,11 +21,12 @@ The model size of LLaMA-7B shrinks from 12.5 GiB (FP16) to 2.2 GiB (2 bits).
 | **Ours**                                     | 2    | 7.59      | 8.96 | 11.33 | 2.2                   |
 
 The model size of LLaMA-13B shrinks from 24.2 GiB (FP16) to 4.0 GiB (2 bits).
+
 | [LLaMA-13B](https://arxiv.org/abs/2302.13971) | Bits | Wikitext2 | C4   | PTB   | checkpoint size (GiB) |
-|----------------------------------------------|------|-----------|------|-------|-----------------------|
-| FP16                                         | 16   | 5.09      | 6.61 | 8.06  | 24.2                  |
-| [GPTQ](https://arxiv.org/abs/2210.17323)     | 4    | 5.21      | 6.69 | 8.18  | 6.7                   |
-| **Ours**                                     | 2    | 6.44      | 7.88 | 9.64  | 4.0                   |
+|-----------------------------------------------|------|-----------|------|-------|-----------------------|
+| FP16                                          | 16   | 5.09      | 6.61 | 8.06  | 24.2                  |
+| [GPTQ](https://arxiv.org/abs/2210.17323)      | 4    | 5.21      | 6.69 | 8.18  | 6.7                   |
+| **Ours**                                      | 2    | 6.44      | 7.88 | 9.64  | 4.0                   |
 
 ## Requirements
 
@@ -91,10 +92,12 @@ Exemplary model output from prompting the instruction-tuned model:
 
 ## Run inference or evaluation of the base model
 
-If you want to evaluate or do inference on the base model (not tuned for instructions), you can use the following commands:
+If you want to evaluate or do inference on the base model (not tuned for instructions), you can use the following commands
+(use the `-s` switch to select model size):
 
 ```bash
 CUDA_VISIBLE_DEVICES=0 python llama_2b_evaluate.py
+CUDA_VISIBLE_DEVICES=0 python llama_2b_evaluate.py -s 13b  # evaluate the 13B model
 CUDA_VISIBLE_DEVICES=0 python llama_2b_inference.py
 ```
 

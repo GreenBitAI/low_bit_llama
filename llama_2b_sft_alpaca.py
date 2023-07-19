@@ -13,7 +13,9 @@ if not torch.cuda.is_available():
 DEFAULT_PROMPT = "Give me an interesting traveling plan to Europe"
 parser = argparse.ArgumentParser("prompt the instruction-tuned model")
 parser.add_argument("-p", "--prompt", default=DEFAULT_PROMPT, required=False, type=str, help="Enter your prompt here.")
+parser.add_argument("-s", "--model-size", choices=["7b", "7B", "13b", "13B"], required=False, default="7B", type=str, help="Which model size to use.")
 args = parser.parse_args()
+args.model_size = args.model_size.upper()
 
 if args.prompt == DEFAULT_PROMPT:
     print(f"Using default prompt: {args.prompt}")
@@ -22,8 +24,8 @@ else:
 
 replace_peft_model_with_lora_model()
 
-model_uri = 'GreenBitAI/LLaMA-7B-2bit'
-lora_uri = 'GreenBitAI/LLaMA-7B-2bit-alpaca'
+model_uri = f'GreenBitAI/LLaMA-{args.model_size}-2bit'
+lora_uri = f'GreenBitAI/LLaMA-{args.model_size}-2bit-alpaca'
 cache_dir = './cache'
 
 model, tokenizer = load_llama_model_lora(model_uri, lora_uri, cache_dir=cache_dir, groupsize=32, bits=2)
