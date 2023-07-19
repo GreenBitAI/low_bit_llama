@@ -30,12 +30,7 @@ model, tokenizer = load_llama_model_lora(model_uri, lora_uri, cache_dir=cache_di
 
 model.eval()
 
-prompt = f'''"Below is an instruction that describes a task. Write a response that appropriately completes the request.\n" \
-    "\n" \
-    "### Instruction:\n" \
-    "{args.prompt}:\n" \
-    "\n" \
-    "### Response:\n"'''
+prompt = f"Below is an instruction that describes a task. Write a response that appropriately completes the request.\n\n### Instruction:\n{args.prompt}\n\n### Response:\n"
 
 batch = tokenizer(prompt, return_tensors="pt", add_special_tokens=False)
 batch = {k: v.cuda() for k, v in batch.items()}
