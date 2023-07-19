@@ -20,6 +20,13 @@ The model size of LLaMA-7B shrinks from 12.5 GiB (FP16) to 2.2 GiB (2 bits).
 | [GPTQ](https://arxiv.org/abs/2210.17323)     | 4    | 5.85      | 7.21 | 9.00  | 3.6                   |
 | **Ours**                                     | 2    | 7.59      | 8.96 | 11.33 | 2.2                   |
 
+The model size of LLaMA-13B shrinks from 24.2 GiB (FP16) to 4.0 GiB (2 bits).
+| [LLaMA-13B](https://arxiv.org/abs/2302.13971) | Bits | Wikitext2 | C4   | PTB   | checkpoint size (GiB) |
+|----------------------------------------------|------|-----------|------|-------|-----------------------|
+| FP16                                         | 16   | 5.09      | 6.61 | 8.06  | 24.2                  |
+| [GPTQ](https://arxiv.org/abs/2210.17323)     | 4    | 5.21      | 6.69 | 8.18  | 6.7                   |
+| **Ours**                                     | 2    | 6.44      | 7.88 | 9.64  | 4.0                   |
+
 ## Requirements
 
 The inference currently requires a machine with CUDA installed.
