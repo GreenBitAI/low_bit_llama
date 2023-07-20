@@ -41,14 +41,18 @@ pip install -r requirements.txt
 
 Use the environment variable `CUDA_VISIBLE_DEVICES` to select the correct GPU.
 Multi-GPU is not supported, but the model is very compressed, so 1 GPU should be enough.
-To use the instruction-tuned model, you can use the following commands:
+To use the instruction-tuned model, you can use the following commands.
+Use the `-s` option to select the model size (default is 7B) and `-h` to check for options.
 
 ```bash
 CUDA_VISIBLE_DEVICES=0 python llama_2b_sft_alpaca.py  # uses default prompt
+CUDA_VISIBLE_DEVICES=0 python llama_2b_sft_alpaca.py -s 13B  # uses default prompt with 13B model
+# custom prompts:
 CUDA_VISIBLE_DEVICES=0 python llama_2b_sft_alpaca.py -p "Tell me the meaning of life"
+CUDA_VISIBLE_DEVICES=0 python llama_2b_sft_alpaca.py -s 13B -p "Tell me the meaning of life"
 ```
 
-Please note: the instruction-tuned model currently keeps generating tokens even after finishing the answer, which may result in strange output after the answer.
+Please note: the instruction-tuned model currently may keep generating tokens even after finishing the answer, which may result in strange output after the answer.
 
 ### Examples
 
