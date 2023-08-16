@@ -23,7 +23,7 @@ We are happy to release the 2-bit OpenLLaMA 3B models, which are quantized into 
 | [GPTQ](https://arxiv.org/abs/2210.17323)     	     	    | 4    | 128       | 7.54      | 9.58 | 19.52 | 1.94                  |
 | **Ours**                                     	     	    | 2    | 8	       | 8.32      | 10.56| 23.66 | 1.55                  |
 | **Ours**                                     	     	    | 2    | 16        | 8.92      | 11.29| 25.74 | 1.34                  |
-| **Ours**                                     	     	    | 2    | 32        | 9.82      | 12.13| 23.66 | 1.25                  |
+| **Ours**                                     	     	    | 2    | 32        | 9.82      | 12.14| 29.84 | 1.25                  |
 
 | [LLaMA-7B](https://arxiv.org/abs/2302.13971) | Bits | Groupsize | Wikitext2 | C4   | PTB   | checkpoint size (GiB) |
 |----------------------------------------------|------|-----------|-----------|------|-------|-----------------------|
