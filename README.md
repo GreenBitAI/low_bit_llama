@@ -10,23 +10,32 @@ There is no speed-up implemented yet.
 Over the next few weeks, we will continue to offer both 2-bit and 1-bit versions of LLaMA models.
 Additionally, we are considering the provision of low-bit versions for other open-source LLMs in the future.
 
+## Updates
+
+#### 08/16/2023
+We are happy to release the 2-bit OpenLLaMA 3B models, which are quantized into 2-bit representation yet still with strong performance.
+
 ## Results
 
-The model size of LLaMA-7B shrinks from 12.5 GiB (FP16) to 2.2 GiB (2 bits).
+| [LLaMA-3B](https://github.com/openlm-research/open_llama) | Bits | Groupsize | Wikitext2 | C4   | PTB   | checkpoint size (GiB) |
+|-----------------------------------------------------------|------|-----------|-----------|------|-------|-----------------------|
+| FP16                                         	     	    | 16   | /	       | 7.34      | 9.33 | 19.10 | 6.85                  |
+| [GPTQ](https://arxiv.org/abs/2210.17323)     	     	    | 4    | 128       | 7.54      | 9.58 | 19.52 | 1.94                  |
+| **Ours**                                     	     	    | 2    | 8	       | 8.32      | 10.56| 23.66 | 1.55                  |
+| **Ours**                                     	     	    | 2    | 16        | 8.92      | 11.29| 25.74 | 1.34                  |
+| **Ours**                                     	     	    | 2    | 32        | 9.82      | 12.13| 23.66 | 1.25                  |
 
-| [LLaMA-7B](https://arxiv.org/abs/2302.13971) | Bits | Wikitext2 | C4   | PTB   | checkpoint size (GiB) |
-|----------------------------------------------|------|-----------|------|-------|-----------------------|
-| FP16                                         | 16   | 5.67      | 7.07 | 8.80  | 12.5                  |
-| [GPTQ](https://arxiv.org/abs/2210.17323)     | 4    | 5.85      | 7.21 | 9.00  | 3.6                   |
-| **Ours**                                     | 2    | 7.59      | 8.96 | 11.33 | 2.2                   |
+| [LLaMA-7B](https://arxiv.org/abs/2302.13971) | Bits | Groupsize | Wikitext2 | C4   | PTB   | checkpoint size (GiB) |
+|----------------------------------------------|------|-----------|-----------|------|-------|-----------------------|
+| FP16                                         | 16   | /	  | 5.67      | 7.07 | 8.80  | 12.5                  |
+| [GPTQ](https://arxiv.org/abs/2210.17323)     | 4    | 128	  | 5.85      | 7.21 | 9.00  | 3.6                   |
+| **Ours**                                     | 2    | 32	  | 7.59      | 8.96 | 11.33 | 2.2                   |
 
-The model size of LLaMA-13B shrinks from 24.2 GiB (FP16) to 4.0 GiB (2 bits).
-
-| [LLaMA-13B](https://arxiv.org/abs/2302.13971) | Bits | Wikitext2 | C4   | PTB   | checkpoint size (GiB) |
-|-----------------------------------------------|------|-----------|------|-------|-----------------------|
-| FP16                                          | 16   | 5.09      | 6.61 | 8.06  | 24.2                  |
-| [GPTQ](https://arxiv.org/abs/2210.17323)      | 4    | 5.21      | 6.69 | 8.18  | 6.7                   |
-| **Ours**                                      | 2    | 6.44      | 7.88 | 9.64  | 4.0                   |
+| [LLaMA-13B](https://arxiv.org/abs/2302.13971) | Bits | Groupsize | Wikitext2 | C4    | PTB   | checkpoint size (GiB) |
+|-----------------------------------------------|------|-----------|-----------|-------|-------|-----------------------|
+| FP16                                          | 16   | /	   | 5.09      | 6.61  | 8.06  | 24.2                  |
+| [GPTQ](https://arxiv.org/abs/2210.17323)      | 4    | 128	   | 5.21      | 6.69  | 8.18  | 6.7                   |
+| **Ours**                                      | 2    | 32	   | 6.44      | 7.88  | 9.64  | 4.0                   |
 
 ## Requirements
 
