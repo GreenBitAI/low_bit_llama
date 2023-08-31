@@ -66,8 +66,7 @@ We are happy to release the 2-bit OpenLLaMA 3B models, which are quantized into 
 |               | em     | 0.8427        | 0.8545        | 0.8612       | 0.8781           | 0.8801           | 0.89         | 0.91            |
 | Average        |        | 0.4881        | 0.5037        | 0.5087       | 0.5122           | 0.5181           | 0.528        | 0.5519          |
 
-![zero_shot_harness_benchmarks](https://github.com/GreenBitAI/low_bit_llama/assets/24189567/fedd2eab-c4ea-4cd8-9862-120c97cfe189)
-
+![zero_shot_harness_benchmarks](https://github.com/GreenBitAI/low_bit_llama/assets/24189567/28b8d90f-fe5b-43d8-bf39-24c524a7b86f)
 
 ## Requirements
 
