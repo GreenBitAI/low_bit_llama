@@ -51,9 +51,6 @@ We are happy to release the 2-bit OpenLLaMA 3B models, which are quantized into 
 [^5]: [OmniQuant](https://arxiv.org/pdf/2308.13137.pdf)
 
 
-
-
-
 ## Zero-Shot Evaluation
 | Task          | Metric   | LLaMA 3B q2g32 | LLaMA 3B q2g16 | LLaMA 3B q2g8 | LLaMA-1 7B q2g32 | LLaMA-2 7B q2g32 | LLaMA-2 7B q2g8 | LLaMA 3B FP16 | LLaMA-1 7B FP16 |
 |---------------|----------|----------------|----------------|--------------|------------------|------------------|----------------|--------------|-----------------|
@@ -80,8 +77,7 @@ We are happy to release the 2-bit OpenLLaMA 3B models, which are quantized into 
 |               | em       | 0.8427         | 0.8545         | 0.8612       | 0.8781           | 0.8801           | 0.8959         | 0.89         | 0.91            |
 | Average       |          | 0.4881         | 0.5037         | 0.5087       | 0.5122           | 0.5181           | 0.5391         | 0.528        | 0.5519          |
 
-
-![Zero-Shot Harness Evaluation](https://github.com/GreenBitAI/private_llama_2bit/assets/24189567/1fd28ade-2aff-4dbc-998c-6c1efb0715e9)
+![Zero-Shot Harness Evaluation](https://github.com/GreenBitAI/low_bit_llama/assets/24189567/53190300-3cbc-4264-b847-dd8e0f2fac1e)
 
 ## Requirements
 
