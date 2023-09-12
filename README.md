@@ -7,35 +7,79 @@ There is no speed-up implemented yet.
 
 ## Roadmap
 
-Over the next few weeks, we will continue to offer both 2-bit and 1-bit versions of LLaMA models.
+Over the next few months, we will continue offering 2-bit and 1-bit versions of LLaMA models.
 Additionally, we are considering the provision of low-bit versions for other open-source LLMs in the future.
 
 ## Updates
+#### 09/12/2023 
+🎉 We are happy to announce the release of the 2-bit LLaMA-2 7b (W2A16 g32/g8) models, boasting impressive performance. For the first time, the W2A16 model showcases performance on par with the existing W3A16 quantized model while exhibiting superior potential for hardware compatibility. Furthermore, our W2A16 LLaMA-2 7b outperforms FP16 LLaMA-3B on several open evaluation tasks with a 3.09x and 5.68x compression ratio to 3B and 7B respectively. Happy trying!
+
+#### 08/31/2023
+We are happy to release the harness benchmarks on 14 zero-shot tasks based on our 2-bit models. Happy trying 😃🚀!!
 
 #### 08/16/2023
-We are happy to release the 2-bit OpenLLaMA 3B models, which are quantized into 2-bit representation yet still with strong performance.
+We are happy to release the 2-bit OpenLLaMA 3B models, which are quantized into 2-bit representation yet still with strong performance 😃⭐.
 
 ## Results
 
-| [LLaMA-3B](https://github.com/openlm-research/open_llama) | Bits | Groupsize | Wikitext2 | C4   | PTB   | checkpoint size (GiB) |
-|-----------------------------------------------------------|------|-----------|-----------|------|-------|-----------------------|
-| FP16                                         	     	    | 16   | /	       | 7.34      | 9.33 | 19.10 | 6.8                  |
-| [GPTQ](https://arxiv.org/abs/2210.17323)     	     	    | 4    | 128       | 7.54      | 9.58 | 19.52 | 1.9                  |
-| **Ours**                                     	     	    | 2    | 8	       | 8.32      | 10.56| 23.66 | 1.5                  |
-| **Ours**                                     	     	    | 2    | 16        | 8.92      | 11.29| 25.74 | 1.3                  |
-| **Ours**                                     	     	    | 2    | 32        | 9.82      | 12.14| 29.84 | 1.2                  |
+| LLaMA Version             | Method     | Bits | Groupsize | Wikitext2 | C4    | Checkpoint Size (GiB) |
+|:-------------------------:|:----------:|:----:|:---------:|:---------:|:-----:|:---------------------:|
+| **LLaMA 3B**[^1]          | FP16       |  16  |     -     |      7.34 |  9.33 |         6.8           |
+|                           | GPTQ[^4]   |   4  |    128    |      7.54 |  9.58 |         1.9           |
+|                           | **Ours**   |   2  |      8    |      8.32 | 10.56 |         1.5           |
+|                           | **Ours**   |   2  |     16    |      8.92 | 11.29 |         1.3           |
+|                           | **Ours**   |   2  |     32    |      9.82 | 12.14 |         1.2           |
+| **LLaMA-1-7B**[^2]        | FP16       |  16  |     -     |      5.67 |  7.07 |        12.5           |
+|                           | GPTQ[^4]   |   4  |    128    |      5.85 |  7.21 |         3.6           |
+|                           | **Ours**   |   2  |     32    |      7.59 |  8.96 |         2.2           |
+| **LLaMA-2-7B**[^3]        | FP16       |  16  |     -     |      5.47 |  6.97 |        12.5           |
+|                           | GPTQ[^4]   |   4  |    128    |      5.61 |  7.12 |         3.6           |
+|                           | OmniQuant[^5]|   3  |    128    |      6.03 |  7.35 |         3.2           |
+|                           | OmniQuant[^5]|   2  |     128   |      12.84| 17.40 |         2.2           |
+|                           | OmniQuant[^5]|   2  |     64    |      10.56| 13.77 |           -           |
+|                           | **Ours**   |   2  |     32    |      7.13 |  8.68 |         2.2           |
+|                           | **Ours**   |   2  |      8    |      6.09 |  7.63 |         2.9           |
 
-| [LLaMA-7B](https://arxiv.org/abs/2302.13971) | Bits | Groupsize | Wikitext2 | C4   | PTB   | checkpoint size (GiB) |
-|----------------------------------------------|------|-----------|-----------|------|-------|-----------------------|
-| FP16                                         | 16   | /	  | 5.67      | 7.07 | 8.80  | 12.5                  |
-| [GPTQ](https://arxiv.org/abs/2210.17323)     | 4    | 128	  | 5.85      | 7.21 | 9.00  | 3.6                   |
-| **Ours**                                     | 2    | 32	  | 7.59      | 8.96 | 11.33 | 2.2                   |
 
-| [LLaMA-13B](https://arxiv.org/abs/2302.13971) | Bits | Groupsize | Wikitext2 | C4    | PTB   | checkpoint size (GiB) |
-|-----------------------------------------------|------|-----------|-----------|-------|-------|-----------------------|
-| FP16                                          | 16   | /	   | 5.09      | 6.61  | 8.06  | 24.2                  |
-| [GPTQ](https://arxiv.org/abs/2210.17323)      | 4    | 128	   | 5.21      | 6.69  | 8.18  | 6.7                   |
-| **Ours**                                      | 2    | 32	   | 6.44      | 7.88  | 9.64  | 4.0                   |
+[^1]: [LLaMA-1-3B](https://github.com/openlm-research/open_llama)
+[^2]: [LLaMA-1-7B](https://arxiv.org/abs/2302.13971)
+[^3]: [LLaMA-2-7B](https://ai.meta.com/llama/)
+[^4]: [GPTQ](https://arxiv.org/abs/2210.17323)
+[^5]: [OmniQuant](https://arxiv.org/pdf/2308.13137.pdf)
+
+
+
+
+
+## Zero-Shot Evaluation
+| Task          | Metric   | LLaMA 3B q2g32 | LLaMA 3B q2g16 | LLaMA 3B q2g8 | LLaMA-1 7B q2g32 | LLaMA-2 7B q2g32 | LLaMA-2 7B q2g8 | LLaMA 3B FP16 | LLaMA-1 7B FP16 |
+|---------------|----------|----------------|----------------|--------------|------------------|------------------|----------------|--------------|-----------------|
+| Openbookqa    | acc      | 0.196          | 0.238          | 0.242        | 0.224            | 0.246            | 0.296          | 0.27         | 0.29            |
+|               | ac_norm  | 0.332          | 0.358          | 0.362        | 0.388            | 0.376            | 0.4            | 0.4          | 0.41            |
+| arc_challenge | acc      | 0.279          | 0.2978         | 0.3148       | 0.3422           | 0.3268           | 0.3618         | 0.34         | 0.39            |
+|               | ac_norm  | 0.2944         | 0.3319         | 0.3345       | 0.3387           | 0.3387           | 0.372          | 0.37         | 0.41            |
+| hellawswag    | acc      | 0.4238         | 0.444          | 0.462        | 0.4996           | 0.4961           | 0.5379         | 0.49         | 0.68            |
+|               | ac_norm  | 0.5685         | 0.5988         | 0.6242       | 0.6447           | 0.6464           | 0.7014         | 0.67         | 0.73            |
+| piqa          | acc      | 0.7024         | 0.716          | 0.7291       | 0.7476           | 0.7503           | 0.7715         | 0.75         | 0.78            |
+|               | ac_norm  | 0.7116         | 0.7247         | 0.7312       | 0.7443           | 0.7421           | 0.7568         | 0.76         | 0.78            |
+| arc_easy      | acc      | 0.5997         | 0.646          | 0.6528       | 0.6061           | 0.6174           | 0.6254         | 0.69         | 0.68            |
+|               | ac_norm  | 0.5417         | 0.58           | 0.5972       | 0.4566           | 0.4781           | 0.4958         | 0.65         | 0.52            |
+| Winogrande    | acc      | 0.5683         | 0.5888         | 0.6054       | 0.6283           | 0.6298           | 0.6582         | 0.62         | 0.68            |
+| boolq         | acc      | 0.6281         | 0.6636         | 0.6327       | 0.6425           | 0.7061           | 0.7242         | 0.68         | 0.75            |
+| truthfulqa_mc | mc1      | 0.2509         | 0.2118         | 0.2252       | 0.224            | 0.2313           | 0.2399         | 0.22         | 0.21            |
+|               | mc2      | 0.3962         | 0.3501         | 0.3625       | 0.3702           | 0.3854           | 0.3795         | 0.35         | 0.34            |
+| anli_r1       | acc      | 0.337          | 0.334          | 0.344        | 0.331            | 0.333            | 0.363          | 0.33         | 0.35            |
+| anli_r2       | acc      | 0.335          | 0.332          | 0.331        | 0.326            | 0.349            | 0.347          | 0.32         | 0.34            |
+| anli_r3       | acc      | 0.3358         | 0.3383         | 0.3425       | 0.3417           | 0.36             | 0.3733         | 0.35         | 0.37            |
+| wic           | acc      | 0.4984         | 0.5094         | 0.4969       | 0.4984           | 0.4953           | 0.489          | 0.48         | 0.5             |
+| rte           | acc      | 0.5596         | 0.5993         | 0.5632       | 0.639            | 0.6065           | 0.6426         | 0.58         | 0.56            |
+| record        | f1       | 0.8502         | 0.8625         | 0.8687       | 0.8859           | 0.8872           | 0.9037         | 0.88         | 0.91            |
+|               | em       | 0.8427         | 0.8545         | 0.8612       | 0.8781           | 0.8801           | 0.8959         | 0.89         | 0.91            |
+| Average       |          | 0.4881         | 0.5037         | 0.5087       | 0.5122           | 0.5181           | 0.5391         | 0.528        | 0.5519          |
+
+
+![Zero-Shot Harness Evaluation](https://github.com/GreenBitAI/private_llama_2bit/assets/24189567/1fd28ade-2aff-4dbc-998c-6c1efb0715e9)
+
 
 ## Requirements
 
