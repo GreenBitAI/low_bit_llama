@@ -17,9 +17,6 @@ Additionally, we are considering the provision of low-bit versions for other ope
 #### 08/31/2023
 We are happy to release the harness benchmarks on 14 zero-shot tasks based on our 2-bit models. Happy trying 😃🚀!!
 
-#### 08/31/2023
-We are happy to release the harness benchmarks on 14 zero-shot tasks based on our 2-bit models. Happy trying 😃🚀!!
-
 #### 08/16/2023
 We are happy to release the 2-bit OpenLLaMA 3B models, which are quantized into 2-bit representation yet still with strong performance 😃⭐.
 
