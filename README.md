@@ -17,6 +17,9 @@ Additionally, we are considering the provision of low-bit versions for other ope
 #### 08/31/2023
 We are happy to release the harness benchmarks on 14 zero-shot tasks based on our 2-bit models. Happy trying 😃🚀!!
 
+#### 08/31/2023
+We are happy to release the harness benchmarks on 14 zero-shot tasks based on our 2-bit models. Happy trying 😃🚀!!
+
 #### 08/16/2023
 We are happy to release the 2-bit OpenLLaMA 3B models, which are quantized into 2-bit representation yet still with strong performance 😃⭐.
 
@@ -80,6 +83,34 @@ We are happy to release the 2-bit OpenLLaMA 3B models, which are quantized into 
 
 ![Zero-Shot Harness Evaluation](https://github.com/GreenBitAI/private_llama_2bit/assets/24189567/1fd28ade-2aff-4dbc-998c-6c1efb0715e9)
 
+
+## Zero-Shot Evaluation
+| Task          | Metric | LLaMA-3B q2g32 | LLaMA-3B q2g16 | LLaMA-3B q2g8 | LLaMA-1 7B q2g32 | LLaMA-2 7B q2g32 | LLaMA 3B FP16 | LLaMA-1 7B FP16 |
+|---------------|--------|---------------|---------------|--------------|------------------|------------------|--------------|-----------------|
+| Openbookqa     | acc    | 0.196         | 0.238         | 0.242        | 0.224            | 0.246            | 0.27         | 0.29            |
+|               | ac_norm| 0.332         | 0.358         | 0.362        | 0.388            | 0.376            | 0.4          | 0.41            |
+| arc_challenge  | acc    | 0.279         | 0.2978        | 0.3148       | 0.3422           | 0.3268           | 0.34         | 0.39            |
+|               | ac_norm| 0.2944        | 0.3319        | 0.3345       | 0.3387           | 0.3387           | 0.37         | 0.41            |
+| hellawswag     | acc    | 0.4238        | 0.444         | 0.462        | 0.4996           | 0.4961           | 0.49         | 0.68            |
+|               | ac_norm| 0.5685        | 0.5988        | 0.6242       | 0.6447           | 0.6464           | 0.67         | 0.73            |
+| piqa           | acc    | 0.7024        | 0.716         | 0.7291       | 0.7476           | 0.7503           | 0.75         | 0.78            |
+|               | ac_norm| 0.7116        | 0.7247        | 0.7312       | 0.7443           | 0.7421           | 0.76         | 0.78            |
+| arc_easy       | acc    | 0.5997        | 0.646         | 0.6528       | 0.6061           | 0.6174           | 0.69         | 0.68            |
+|               | ac_norm| 0.5417        | 0.58          | 0.5972       | 0.4566           | 0.4781           | 0.65         | 0.52            |
+| Winogrande     | acc    | 0.5683        | 0.5888        | 0.6054       | 0.6283           | 0.6298           | 0.62         | 0.68            |
+| boolq          | acc    | 0.6281        | 0.6636        | 0.6327       | 0.6425           | 0.7061           | 0.68         | 0.75            |
+| truthfulqa_mc  | mc1    | 0.2509        | 0.2118        | 0.2252       | 0.224            | 0.2313           | 0.22         | 0.21            |
+|               | mc2    | 0.3962        | 0.3501        | 0.3625       | 0.3702           | 0.3854           | 0.35         | 0.34            |
+| anli_r1        | acc    | 0.337         | 0.334         | 0.344        | 0.331            | 0.333            | 0.33         | 0.35            |
+| anli_r2        | acc    | 0.335         | 0.332         | 0.331        | 0.326            | 0.349            | 0.32         | 0.34            |
+| anli_r3        | acc    | 0.3358        | 0.3383        | 0.3425       | 0.3417           | 0.36             | 0.35         | 0.37            |
+| wic            | acc    | 0.4984        | 0.5094        | 0.4969       | 0.4984           | 0.4953           | 0.48         | 0.5             |
+| rte            | acc    | 0.5596        | 0.5993        | 0.5632       | 0.639            | 0.6065           | 0.58         | 0.56            |
+| record         | f1     | 0.8502        | 0.8625        | 0.8687       | 0.8859           | 0.8872           | 0.88         | 0.91            |
+|               | em     | 0.8427        | 0.8545        | 0.8612       | 0.8781           | 0.8801           | 0.89         | 0.91            |
+| Average        |        | 0.4881        | 0.5037        | 0.5087       | 0.5122           | 0.5181           | 0.528        | 0.5519          |
+
+![zero_shot_harness_benchmarks](https://github.com/GreenBitAI/low_bit_llama/assets/24189567/28b8d90f-fe5b-43d8-bf39-24c524a7b86f)
 
 ## Requirements
 
