@@ -31,7 +31,7 @@ We are happy to release the 2-bit OpenLLaMA 3B models, which are quantized into 
 |                           | OmniQuant[^5]|   3  |    128    |      6.03 |  7.35 |         3.2           |
 |                           | OmniQuant[^5]|   2  |     128   |      12.84| 17.40 |         2.2           |
 |                           | OmniQuant[^5]|   2  |     64    |      10.56| 13.77 |           -           |
-|                           | [**Ours**](https://huggingface.co/GreenBitAI/LLaMA-3B-4bit-groupsize32)   |   4  |     32    |      5.55 |  7.08 |         3.7           |
+|                           | [**Ours**](https://huggingface.co/GreenBitAI/LLaMA-2-7B-4bit-groupsize32)   |   4  |     32    |      5.55 |  7.08 |         3.7           |
 |                           | [**Ours**](https://huggingface.co/GreenBitAI/LLaMA-2-7B-2bit-groupsize8)   |   2  |      8    |      6.09 |  7.63 |         2.9           |
 |                           | [**Ours**](https://huggingface.co/GreenBitAI/LLaMA-2-7B-2bit-groupsize32)   |   2  |     32    |      7.13 |  8.68 |         2.2           |
 | **LLaMA-1-7B**[^2]        | FP16       |  16  |     -     |      5.67 |  7.07 |        12.5           |
@@ -41,7 +41,7 @@ We are happy to release the 2-bit OpenLLaMA 3B models, which are quantized into 
 |                           | [**Ours**](https://huggingface.co/GreenBitAI/LLaMA-7B-2bit)   |   2  |     32    |      7.59 |  8.96 |         2.2           |
 | **LLaMA 3B**[^1]          | FP16       |  16  |     -     |      7.34 |  9.33 |         6.8           |
 |                           | GPTQ[^4]   |   4  |    128    |      7.54 |  9.58 |         1.9           |
-|                           | [**Ours**](https://huggingface.co/GreenBitAI/LLaMA-3B-2bit-groupsize8)   |   4  |      32    |      7.43 | 9.51 |         2.0           |
+|                           | [**Ours**](https://huggingface.co/GreenBitAI/LLaMA-3B-4bit-groupsize32)   |   4  |      32    |      7.43 | 9.51 |         2.0           |
 |                           | [**Ours**](https://huggingface.co/GreenBitAI/LLaMA-3B-2bit-groupsize8)   |   2  |      8    |      8.32 | 10.56 |         1.5           |
 |                           | [**Ours**](https://huggingface.co/GreenBitAI/LLaMA-3B-2bit-groupsize16)   |   2  |     16    |      8.92 | 11.29 |         1.3           |
 |                           | [**Ours**](https://huggingface.co/GreenBitAI/LLaMA-3B-2bit-groupsize32)   |   2  |     32    |      9.82 | 12.14 |         1.2           |
