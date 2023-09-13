@@ -164,6 +164,17 @@ This code is based on:
 
 Thanks to Meta AI for releasing [LLaMA](https://arxiv.org/abs/2302.13971), a powerful LLM.
 
+## Citation
+If you use our approach in your research, please cite our work as follows:
+```
+@article{low_bit_llama,
+  title={Advanced Ultra-Low Bitrate Compression Techniques for the LLaMA Family of LLMs},
+  author={Guo, Nianhui and Bethge, Joseph and Hu, Ting and Meinel, Christoph and Yang, Haojin},
+  journal={https://github.com/GreenBitAI/low_bit_llama},
+  year={2023}
+}
+```
+
 # License
 
 The original code was released under its respective license and copyrights, i.e.:
