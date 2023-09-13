@@ -35,6 +35,7 @@ We are happy to release the 2-bit OpenLLaMA 3B models, which are quantized into 
 | **LLaMA-1-7B**[^2]        | FP16       |  16  |     -     |      5.67 |  7.07 |        12.5           |
 |                           | GPTQ[^4]   |   4  |    128    |      5.85 |  7.21 |         3.6           |
 |                           | GPTQ[^4]   |   3  |    128    |      6.61 |  7.85 |         3.0           |
+|                           | OmniQuant[^5]|   2  |     128   |      10.53| 13.89 |         2.2           |
 |                           | **Ours**   |   2  |     32    |      7.59 |  8.96 |         2.2           |
 | **LLaMA 3B**[^1]          | FP16       |  16  |     -     |      7.34 |  9.33 |         6.8           |
 |                           | GPTQ[^4]   |   4  |    128    |      7.54 |  9.58 |         1.9           |
