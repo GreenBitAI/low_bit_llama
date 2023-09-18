@@ -48,7 +48,3 @@ llama_eval(model, c4_testloader)
 print("Loading dataset 'wikitext2' for evaluation...")
 _, wikitext2_testloader = get_loaders('wikitext2', model=model_uri, cache_dir=cache_dir, nsamples=128, seed=0, seqlen=2048)
 llama_eval(model, wikitext2_testloader)
-
-print("Loading dataset 'ptb' for evaluation...")
-_, ptb_testloader = get_loaders('ptb', model=model_uri, cache_dir=cache_dir, nsamples=128, seed=0, seqlen=2048)
-llama_eval(model, ptb_testloader)
