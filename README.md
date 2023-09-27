@@ -24,6 +24,10 @@ We are happy to release the 2-bit OpenLLaMA 3B models, which are quantized into 
 
 | LLaMA Version             | Method     | Bits | Groupsize | Wikitext2 | C4    | Checkpoint Size (GiB) |
 |:-------------------------:|:----------:|:----:|:---------:|:---------:|:-----:|:---------------------:|
+| **LLaMA-2-70B**[^3]        | FP16       |  16  |     -     |      3.31 |  5.70 |        130           |                   
+|                           | [**Ours**](https://huggingface.co/GreenBitAI/LLaMA-2-70B-2bit-groupsize8)   |   2  |     8    |      4.06 |  6.15 |         26.9           |
+| **LLaMA-1-30B**[^3]        | FP16       |  16  |     -     |      4.10 |  5.98 |        60.5          |
+|                           | [**Ours**](https://huggingface.co/GreenBitAI/LLaMA-30B-2bit-groupsize8)   |   2  |     8    |      4.75 |  6.57 |         12.9           |
 | **LLaMA-2-7B**[^3]        | FP16       |  16  |     -     |      5.47 |  6.97 |        12.5           |
 |                           | GPTQ[^4]   |   4  |    128    |      5.61 |  7.12 |         3.6           |
 |                           | GPTQ[^4]   |   2  |    128    |     2.2e5 | 1.7e5 |         2.2           |
