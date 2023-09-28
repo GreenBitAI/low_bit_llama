@@ -5,7 +5,7 @@ import torch
 
 from datautils import get_loaders
 from evaluate import llama_eval
-from model import load_llama_model
+from model import load_llama_model, QuantLinear
 
 if not torch.cuda.is_available():
     print("CUDA is needed to run the model.")
@@ -36,9 +36,30 @@ if args.groupsize == 32:
 else:
     asym = False
 
+bits = 2
+
+if bits == 2:
+    if asym:
+        double_groupsize = -1
+    else:
+        if args.groupsize == 32:
+            double_groupsize=32
+        else:
+            if args.llama_version == 1:
+                double_groupsize=64
+            else:
+                double_groupsize=32
+else:
+    if args.model_size in ["3b", "3B"]:
+        double_groupsize=64
+    elif args.model_size in ["7b", "7B"]:
+        double_groupsize=256
+
+v1 = (args.llama_version==1) and args.model_size in ["7b", "7B"]
+
 cache_dir = './cache'
 
-model, tokenizer = load_llama_model(model_uri, cache_dir=cache_dir, groupsize=args.groupsize, bits=2, half=True, asym=asym)
+model, tokenizer = load_llama_model(model_uri, cache_dir=cache_dir, groupsize=args.groupsize, double_groupsize=double_groupsize, bits=2, half=True, v1=v1, asym=asym)
 model.eval()
 
 print("Loading dataset 'c4' for evaluation...")
@@ -48,3 +69,4 @@ llama_eval(model, c4_testloader)
 print("Loading dataset 'wikitext2' for evaluation...")
 _, wikitext2_testloader = get_loaders('wikitext2', model=model_uri, cache_dir=cache_dir, nsamples=128, seed=0, seqlen=2048)
 llama_eval(model, wikitext2_testloader)
+

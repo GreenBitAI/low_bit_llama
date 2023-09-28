@@ -10,7 +10,7 @@ from huggingface_hub import hf_hub_download
 init(autoreset=True)
 
 class QuantLinear(nn.Module):
-    def __init__(self, in_features, out_features, groupsize=-1, bits=4, asym=True):
+    def __init__(self, in_features, out_features, groupsize=-1, double_groupsize=-1, bits=4, v1 = True, asym=True):
         super().__init__()
 
         bits=bits
@@ -20,28 +20,39 @@ class QuantLinear(nn.Module):
         self.maxq = 2 ** self.bits - 1
         groupsize = groupsize if groupsize != -1 else in_features
         self.groupsize = groupsize
-        double_quantize_groupsize = out_features if groupsize == 32 else 64
+        
+        if double_groupsize==-1:
+            double_groupsize=out_features
+        
         self.asym = asym
+        
 
         self.disable_bias = True
-        self.initialize(in_features, out_features, groupsize, double_quantize_groupsize, bits, asym)
+        self.initialize(in_features, out_features, groupsize, double_groupsize, bits, v1, asym)
 
-    def initialize(self, in_features, out_features, groupsize, double_quantize_groupsize, bits, asym):
+    def initialize(self, in_features, out_features, groupsize, double_quantize_groupsize, bits, v1, asym):
 
         if asym:
-            self.register_buffer('qzeros', torch.empty((math.ceil(in_features/groupsize), out_features // 256 * (bits * 8)), dtype=torch.int32))
-            self.register_buffer('qscales', torch.empty(math.ceil(in_features/groupsize), out_features, 1), torch.uint8)
+            self.register_buffer('qzeros', torch.empty(math.ceil(in_features/groupsize), math.ceil(out_features / 256 * (bits * 8)), dtype=torch.int32))
+            if bits == 4:
+                self.register_buffer('qscales', torch.empty(math.ceil(in_features/groupsize), math.ceil(out_features/double_quantize_groupsize), double_quantize_groupsize), torch.uint8)
+            else:
+                self.register_buffer('qscales', torch.empty(math.ceil(in_features/groupsize), out_features), torch.uint8)
 
         else:
-            self.register_buffer('qstatistic', torch.empty(math.ceil(in_features/groupsize), out_features), torch.uint8)
+            self.register_buffer('qstatistic', torch.empty(math.ceil(in_features/groupsize), math.ceil(out_features/double_quantize_groupsize), double_quantize_groupsize), torch.uint8)
             self.register_buffer('qzeros_zeros', torch.empty((math.ceil(in_features/groupsize), math.ceil(out_features/double_quantize_groupsize), 1)))
             self.register_buffer('qzeros_scales', torch.empty((math.ceil(in_features/groupsize), math.ceil(out_features/double_quantize_groupsize), 1)))
 
-        self.register_buffer('qscales_zeros', torch.empty(math.ceil(in_features/groupsize), math.ceil(out_features/double_quantize_groupsize), 1))
-        self.register_buffer('qscales_scales', torch.empty(math.ceil(in_features/groupsize), math.ceil(out_features/double_quantize_groupsize), 1))
+        if not v1:
+            self.register_buffer('qscales_zeros', torch.empty(math.ceil(in_features/groupsize), math.ceil(out_features/double_quantize_groupsize), 1, dtype=torch.half))
+            self.register_buffer('qscales_scales', torch.empty(math.ceil(in_features/groupsize), math.ceil(out_features/double_quantize_groupsize), 1, dtype=torch.half))
+        else:
+            self.register_buffer('qscales_zeros', torch.empty(1, out_features, 1)) 
+            self.register_buffer('qscales_scales', torch.empty(1, out_features, 1))
 
-        self.register_buffer('g_idx', torch.tensor([i // groupsize  for i in range(in_features)], dtype = torch.int32))
-        self.register_buffer('qweight', torch.empty((in_features // 256 * (bits * 8), out_features), dtype=torch.int32))
+        self.register_buffer('g_idx', torch.tensor([i // groupsize  for i in range(in_features)], dtype=torch.int32))
+        self.register_buffer('qweight', torch.empty(math.ceil(in_features / 256 * (bits * 8)), out_features, dtype=torch.int32))
         self.register_buffer("wf", torch.tensor(list(range(0,32,bits)), dtype=torch.int32).unsqueeze(0))
         self.register_buffer('bias', torch.empty(out_features))
 
@@ -59,7 +70,11 @@ class QuantLinear(nn.Module):
             zeros_unpack = zeros_unpack + 1
             zeros_unpack = zeros_unpack.reshape(-1, self.out_features) 
             zeros_unpack = zeros_unpack[self.g_idx.long()]
-
+            
+            if self.bits == 2:
+                self.qscales.unsqueeze(-1)
+            else:
+                pass
             scales = ((self.qscales.to(x.dtype)-self.qscales_zeros)*self.qscales_scales).view(math.ceil(self.in_features/self.groupsize), self.out_features)[self.g_idx.long()]
 
             weight = ((weight_unpack - zeros_unpack)*scales).type(x.dtype)
@@ -81,7 +96,7 @@ class QuantLinear(nn.Module):
         return out
 
 
-def make_quant(module, names, name='', groupsize=-1, bits=4, asym=True):
+def make_quant(module, names, name='', groupsize=-1, double_groupsize=-1, bits=4, v1=True, asym=True):
     if isinstance(module, QuantLinear):
         return
     for attr in dir(module):
@@ -89,10 +104,10 @@ def make_quant(module, names, name='', groupsize=-1, bits=4, asym=True):
         name1 = name + '.' + attr if name != '' else attr
         if name1 in names:
             setattr(
-                module, attr, QuantLinear(tmp.in_features, tmp.out_features, groupsize=groupsize, bits=bits, asym=asym)
+                module, attr, QuantLinear(tmp.in_features, tmp.out_features, groupsize=groupsize, double_groupsize=double_groupsize, bits=bits, v1=v1, asym=asym)
             )
     for name1, child in module.named_children():
-        make_quant(child, names, name + '.' + name1 if name != '' else name1, groupsize=groupsize, bits=bits, asym=asym)
+        make_quant(child, names, name + '.' + name1 if name != '' else name1, groupsize=groupsize, double_groupsize=double_groupsize, bits=bits, v1=v1, asym=asym)
 
 
 def model_to_half(model):
@@ -116,7 +131,7 @@ def find_layers(module, layers=[nn.Conv2d, nn.Linear], name=''):
     return res
 
 
-def load_llama_model(model_uri, cache_dir, groupsize=-1, bits=4, half=False, asym=False, device_map="auto", seqlen=2048):
+def load_llama_model(model_uri, cache_dir, groupsize=-1, double_groupsize=-1, bits=4, half=False, v1=True, asym=False, device_map="auto", seqlen=2048):
     import accelerate
     from transformers import LlamaConfig, LlamaForCausalLM, LlamaTokenizer
 
@@ -131,7 +146,7 @@ def load_llama_model(model_uri, cache_dir, groupsize=-1, bits=4, half=False, asy
         for name in ['lm_head']:
             if name in layers:
                 del layers[name]
-        make_quant(model, layers, groupsize=groupsize, bits=bits, asym=asym)
+        make_quant(model, layers, groupsize=groupsize, double_groupsize=double_groupsize, bits=bits, v1=v1, asym=asym)
 
     model = accelerate.load_checkpoint_and_dispatch(
         model=model,
