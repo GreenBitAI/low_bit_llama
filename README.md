@@ -52,6 +52,8 @@ We are happy to release the 2-bit OpenLLaMA 3B models, which are quantized into 
 |                           | [**Ours**](https://huggingface.co/GreenBitAI/LLaMA-3B-2bit-groupsize8)   |   2  |      8    |      8.32 | 10.56 |         1.5           |
 |                           | [**Ours**](https://huggingface.co/GreenBitAI/LLaMA-3B-2bit-groupsize16)   |   2  |     16    |      8.92 | 11.29 |         1.3           |
 |                           | [**Ours**](https://huggingface.co/GreenBitAI/LLaMA-3B-2bit-groupsize32)   |   2  |     32    |      9.82 | 12.14 |         1.2           |
+| **TinyLLaMA 1.1B**[^6]          | FP16       |  16  |     -     |      9.53 |  11.01 |         4.0           |
+|                                 | **Ours**       |  2  |     -     |      - |  - |         -           |
 
 
 [^1]: [LLaMA-1-3B](https://github.com/openlm-research/open_llama)
@@ -59,6 +61,7 @@ We are happy to release the 2-bit OpenLLaMA 3B models, which are quantized into 
 [^3]: [LLaMA-2-7B](https://ai.meta.com/llama/)
 [^4]: [GPTQ](https://arxiv.org/abs/2210.17323)
 [^5]: [OmniQuant](https://arxiv.org/pdf/2308.13137.pdf)
+[^6]: [TinyLLaMA](https://github.com/jzhang38/TinyLlama)
 
 
 ## Zero-Shot Evaluation
