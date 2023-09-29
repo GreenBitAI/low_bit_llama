@@ -11,8 +11,11 @@ Over the next few months, we will continue offering 2-bit and 1-bit versions of 
 Additionally, we are considering the provision of low-bit versions for other open-source LLMs in the future.
 
 ## Updates
+#### 08/16/2023
+We are happy to release the W2A16 LLaMA-1 30B and LLaMA-2 70B models. Both are quantized into 2-bit representation yet still with strong performance.
+
 #### 09/12/2023 
-🎉 We are happy to announce the release of the 2-bit LLaMA-2 7b (W2A16 g32/g8) models, boasting impressive performance. For the first time, the W2A16 model showcases performance on par with the existing W3A16 quantized model while exhibiting superior potential for hardware compatibility. Furthermore, our W2A16 LLaMA-2 7b outperforms FP16 LLaMA-3B on several open evaluation tasks with a 3.09x and 5.68x compression ratio to 3B and 7B LLaMA respectively. Happy trying!
+🎉 We are happy to announce the release of the 2-bit LLaMA-2 7B (W2A16 g32/g8) models, boasting impressive performance. For the first time, the W2A16 model showcases performance on par with the existing W3A16 quantized model while exhibiting superior potential for hardware compatibility. Furthermore, our W2A16 LLaMA-2 7B outperforms FP16 LLaMA-3B on several open evaluation tasks with a 3.09x and 5.68x compression ratio to 3B and 7B LLaMA respectively. Happy trying!
 
 #### 08/31/2023
 We are happy to release the harness benchmarks on 14 zero-shot tasks based on our 2-bit models. Happy trying 😃🚀!!
