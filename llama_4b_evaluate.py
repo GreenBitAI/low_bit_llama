@@ -12,24 +12,26 @@ if not torch.cuda.is_available():
     sys.exit(0)
 
 parser = argparse.ArgumentParser("Run inference with low-bit LLaMA models.")
-parser.add_argument("-s", "--model-size", choices=["3b", "3B", "7b", "7B"], required=False, default="7B", type=str, help="Which model size to use.")
-parser.add_argument("-v", "--llama-version", choices=[1,2], required=False, default=2, type=int, help="which version to evaluate")
-parser.add_argument("-g", "--groupsize", choices=[32], required=False, default=32, type=int, help="Specify quantization groups")
+parser.add_argument("-s", "--model-size", choices=["3b", "3B", "7b", "7B", "30b", "30B", "70b", "70B"], required=False, default="7B", type=str, help="Which model size to use.")
+parser.add_argument("-v", "--llama-version", choices=[1, 2], required=False, default=2, type=int, help="which version to evaluate")
+parser.add_argument("-g", "--groupsize", choices=[8, 6, 32], required=False, default=32, type=int, help="Specify quantization groups")
 
 args = parser.parse_args()
 args.model_size = args.model_size.upper()
 
-if args.llama_version == 1:
-    model_uri = f'GreenBitAI/LLaMA-{args.model_size}-4bit'
-    
-    if args.model_size in ["3b", "3B"]:
-        model_uri = model_uri + f'-groupsize{args.groupsize}'
-
-else:
-    model_uri = f'GreenBitAI/LLaMA-2-{args.model_size}-4bit'
-
-    if args.model_size in ["3b", "3B", "7b", "7B"]:
-        model_uri = model_uri + f'-groupsize{args.groupsize}'
+if args.llama_version == 1: 
+    model_uri = f'GreenBitAI/LLaMA-{args.model_size}-2bit' 
+     
+    if args.model_size in ["3b", "3B", "30b", "30B"]: 
+        model_uri = model_uri + f'-groupsize{args.groupsize}' 
+     
+else: 
+    model_uri = f'GreenBitAI/LLaMA-2-{args.model_size}-2bit' 
+ 
+    if args.model_size in ["3b", "3B", "7b", "7B", "70b", "70B"]: 
+        model_uri = model_uri + f'-groupsize{args.groupsize}' 
+    else: 
+        raise NotImplemented
 
 if args.groupsize == 32: 
     asym = True 

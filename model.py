@@ -72,10 +72,11 @@ class QuantLinear(nn.Module):
             zeros_unpack = zeros_unpack[self.g_idx.long()]
             
             if self.bits == 2:
-                self.qscales.unsqueeze(-1)
+                qscales = self.qscales.unsqueeze(-1)
             else:
-                pass
-            scales = ((self.qscales.to(x.dtype)-self.qscales_zeros)*self.qscales_scales).view(math.ceil(self.in_features/self.groupsize), self.out_features)[self.g_idx.long()]
+                qscales = self.qscales
+            
+            scales = ((qscales.to(x.dtype)-self.qscales_zeros)*self.qscales_scales).view(math.ceil(self.in_features/self.groupsize), self.out_features)[self.g_idx.long()]
 
             weight = ((weight_unpack - zeros_unpack)*scales).type(x.dtype)
 

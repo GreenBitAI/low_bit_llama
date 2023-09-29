@@ -17,27 +17,49 @@ parser.add_argument("-g", "--groupsize", choices=[8, 16, 32], required=False, de
 args = parser.parse_args()
 args.model_size = args.model_size.upper()
 
-if args.llama_version == 1:
-    model_uri = f'GreenBitAI/LLaMA-{args.model_size}-2bit'
-
-    if args.model_size in ["3b", "3B"]:
-        model_uri = model_uri + f'-groupsize{args.groupsize}'
-
-else:
-    model_uri = f'GreenBitAI/LLaMA-2-{args.model_size}-2bit'
-
-    if args.model_size in ["3b", "3B", "7b", "7B"]:
-        model_uri = model_uri + f'-groupsize{args.groupsize}'
-
+if args.llama_version == 1: 
+    model_uri = f'GreenBitAI/LLaMA-{args.model_size}-2bit' 
+     
+    if args.model_size in ["3b", "3B", "30b", "30B"]: 
+        model_uri = model_uri + f'-groupsize{args.groupsize}' 
+     
+else: 
+    model_uri = f'GreenBitAI/LLaMA-2-{args.model_size}-2bit' 
+ 
+    if args.model_size in ["3b", "3B", "7b", "7B", "70b", "70B"]: 
+        model_uri = model_uri + f'-groupsize{args.groupsize}' 
+    else: 
+        raise NotImplemented
 
 if args.groupsize == 32:
     asym = True
 else:
     asym = False
 
+bits = 2
+
+if bits == 2:
+    if asym:
+        double_groupsize = -1
+    else:
+        if args.groupsize == 32:
+            double_groupsize=32
+        else:
+            if args.llama_version == 1:
+                double_groupsize=64
+            else:
+                double_groupsize=32
+else:
+    if args.model_size in ["3b", "3B"]:
+        double_groupsize=64
+    elif args.model_size in ["7b", "7B"]:
+        double_groupsize=256
+
+v1 = (args.llama_version==1) and args.model_size in ["7b", "7B"]
+
 cache_dir = './cache'
 
-model, tokenizer = load_llama_model(model_uri, cache_dir=cache_dir, groupsize=args.groupsize, bits=2, half=True, asym=asym)
+model, tokenizer = load_llama_model(model_uri, cache_dir=cache_dir, groupsize=args.groupsize, double_groupsize=double_groupsize, v1=v1, bits=2, half=True, asym=asym)
 model.eval()
 
 prompt = '''The meaning of life is'''
