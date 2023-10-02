@@ -52,7 +52,7 @@ We are happy to release the 2-bit OpenLLaMA 3B models, which are quantized into 
 |                           | [**Ours**](https://huggingface.co/GreenBitAI/LLaMA-3B-2bit-groupsize8)   |   2  |      8    |      8.32 | 10.56 |         1.5           |
 |                           | [**Ours**](https://huggingface.co/GreenBitAI/LLaMA-3B-2bit-groupsize16)   |   2  |     16    |      8.92 | 11.29 |         1.3           |
 |                           | [**Ours**](https://huggingface.co/GreenBitAI/LLaMA-3B-2bit-groupsize32)   |   2  |     32    |      9.82 | 12.14 |         1.2           |
-| **TinyLLaMA 1.1B**[^6]          | FP16       |  16  |     -     |      9.53 |  11.01 |         4.0           |
+| **TinyLLaMA 1.1B**[^6]          | FP16       |  16  |     -     |      9.10 |  10.6 |         4.0           |
 |                                 | **Ours**       |  2  |     8     |      - |  - |         0.6           |
 |                                 | **Ours**       |  2  |     32     |      - |  - |         0.5           |
 
