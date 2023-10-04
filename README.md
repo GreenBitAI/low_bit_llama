@@ -11,6 +11,8 @@ Over the next few months, we will continue offering 2-bit and 1-bit versions of 
 Additionally, we are considering the provision of low-bit versions for other open-source LLMs in the future.
 
 ## Latest Updates
+[10/04/2023] We are happy to release the W2A16 g8/328 TinyLLaMA-1.1B models.
+
 [09/29/2023] We are happy to release the W2A16 g8 LLaMA-1 30B and LLaMA-2 70B models.
 
 [09/12/2023] We are happy to announce the release of the 2-bit LLaMA-2 7B (W2A16 g32/g8) models.
@@ -48,8 +50,8 @@ Additionally, we are considering the provision of low-bit versions for other ope
 |                           | [**Ours**](https://huggingface.co/GreenBitAI/LLaMA-3B-2bit-groupsize16)   |   2  |     16    |      8.92 | 11.29 |         1.3           |
 |                           | [**Ours**](https://huggingface.co/GreenBitAI/LLaMA-3B-2bit-groupsize32)   |   2  |     32    |      9.82 | 12.14 |         1.2           |
 | **TinyLLaMA 1.1B**[^6]          | FP16       |  16  |     -     |      9.10 |  10.6 |         4.0           |
-|                                 | **Ours**       |  2  |     8     |      10.06 |  11.81 |         0.6           |
-|                                 | **Ours**       |  2  |     32     |      12.05 |  14.26 |         0.5           |
+|                                 | [**Ours**](https://huggingface.co/GreenBitAI/LLaMA-2-1.1B-2bit-groupsize8)       |  2  |     8     |      9.99 |  11.75 |         0.6           |
+|                                 | [**Ours**](https://huggingface.co/GreenBitAI/LLaMA-2-1.1B-2bit-groupsize32)       |  2  |     32     |      12.04 |  14.27 |         0.5           |
 
 ##  Fine-tuned Model
 | LLM Models                | Method     | Bits | Checkpoint Size (GiB) |
