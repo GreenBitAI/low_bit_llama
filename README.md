@@ -23,8 +23,7 @@ We are happy to release the harness benchmarks on 14 zero-shot tasks based on ou
 #### 08/16/2023
 We are happy to release the 2-bit OpenLLaMA 3B models, which are quantized into 2-bit representation yet still with strong performance 😃⭐.
 
-## Results
-
+## Pretrained Model
 | LLM Models            | Method     | Bits | Groupsize | Wikitext2 | C4    | Checkpoint Size (GiB) |
 |:-------------------------:|:----------:|:----:|:---------:|:---------:|:-----:|:---------------------:|
 | **LLaMA-2-70B**[^3]        | FP16       |  16  |     -     |      3.31 |  5.70 |        130           |                   
@@ -56,14 +55,21 @@ We are happy to release the 2-bit OpenLLaMA 3B models, which are quantized into 
 |                                 | **Ours**       |  2  |     8     |      10.06 |  11.81 |         0.6           |
 |                                 | **Ours**       |  2  |     32     |      12.05 |  14.26 |         0.5           |
 
+##  Fine-tuned Model
+| LLM Models                | Method     | Bits | Checkpoint Size (GiB) |
+|:-------------------------:|:----------:|:----:|:---------:|
+| **LLaMA-2-70B-Chat**[^3]  | FP16       |  16  |     130     |                     
+|                           | Ours       |   2  |     -     |    
+| **CodeLLaMA-7B**[^7]      | FP16       |  16  |     12.9     |                      
+|                           | Ours       |   2  |     -     |    
 
-
-[^1]: [LLaMA-1-3B](https://github.com/openlm-research/open_llama)
-[^2]: [LLaMA-1-7B](https://arxiv.org/abs/2302.13971)
-[^3]: [LLaMA-2-7B](https://ai.meta.com/llama/)
+[^1]: [OpenLLaMA](https://github.com/openlm-research/open_llama)
+[^2]: [LLaMA-1](https://arxiv.org/abs/2302.13971)
+[^3]: [LLaMA-2](https://ai.meta.com/llama/)
 [^4]: [GPTQ](https://arxiv.org/abs/2210.17323)
 [^5]: [OmniQuant](https://arxiv.org/pdf/2308.13137.pdf)
 [^6]: [TinyLLaMA](https://github.com/jzhang38/TinyLlama)
+[^7]: [CodeLLaMA](https://github.com/facebookresearch/codellama)
 
 
 ## Zero-Shot Evaluation
