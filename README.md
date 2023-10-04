@@ -11,7 +11,7 @@ Over the next few months, we will continue offering 2-bit and 1-bit versions of 
 Additionally, we are considering the provision of low-bit versions for other open-source LLMs in the future.
 
 ## Latest Updates
-[10/04/2023] We are happy to release the W2A16 g8/328 TinyLLaMA-1.1B models.
+[10/04/2023] We are happy to release the W2A16 g8/32 TinyLLaMA-1.1B models.
 
 [09/29/2023] We are happy to release the W2A16 g8 LLaMA-1 30B and LLaMA-2 70B models.
 
