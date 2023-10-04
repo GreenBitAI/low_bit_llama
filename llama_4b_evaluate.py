@@ -20,13 +20,13 @@ args = parser.parse_args()
 args.model_size = args.model_size.upper()
 
 if args.llama_version == 1: 
-    model_uri = f'GreenBitAI/LLaMA-{args.model_size}-2bit' 
+    model_uri = f'GreenBitAI/LLaMA-{args.model_size}-4bit' 
      
     if args.model_size in ["3b", "3B", "30b", "30B"]: 
         model_uri = model_uri + f'-groupsize{args.groupsize}' 
      
 else: 
-    model_uri = f'GreenBitAI/LLaMA-2-{args.model_size}-2bit' 
+    model_uri = f'GreenBitAI/LLaMA-2-{args.model_size}-4bit' 
  
     if args.model_size in ["3b", "3B", "7b", "7B", "70b", "70B"]: 
         model_uri = model_uri + f'-groupsize{args.groupsize}' 
