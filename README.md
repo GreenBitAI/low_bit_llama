@@ -59,9 +59,13 @@ We are happy to release the 2-bit OpenLLaMA 3B models, which are quantized into 
 | LLM Models                | Method     | Bits | Checkpoint Size (GiB) |
 |:-------------------------:|:----------:|:----:|:---------:|
 | **LLaMA-2-70B-Chat**[^3]  | FP16       |  16  |     130     |                     
-|                           | Ours       |   2  |     -     |    
+|                           | Ours       |   -  |     -     |    
 | **CodeLLaMA-7B**[^7]      | FP16       |  16  |     12.5     |                      
-|                           | Ours       |   2  |     -     |    
+|                           | Ours       |   -  |     -     |
+| **CodeLLaMA-13B**[^7]      | FP16       |  16  |     24     |                      
+|                           | Ours       |   -  |     -     |
+| **CodeLLaMA-34B**[^7]      | FP16       |  16  |     63     |                      
+|                           | Ours       |   -  |     -     |    
 
 [^1]: [OpenLLaMA](https://github.com/openlm-research/open_llama)
 [^2]: [LLaMA-1](https://arxiv.org/abs/2302.13971)
