@@ -10,18 +10,14 @@ There is no speed-up implemented yet.
 Over the next few months, we will continue offering 2-bit and 1-bit versions of LLaMA models.
 Additionally, we are considering the provision of low-bit versions for other open-source LLMs in the future.
 
-## Updates
-#### 09/29/2023
-We are happy to release the W2A16 LLaMA-1 30B and LLaMA-2 70B models. Both are quantized into 2-bit representation yet still with strong performance.
+## Latest Updates
+[09/29/2023] We are happy to release the W2A16 g8 LLaMA-1 30B and LLaMA-2 70B models.
 
-#### 09/12/2023 
-🎉 We are happy to announce the release of the 2-bit LLaMA-2 7B (W2A16 g32/g8) models, boasting impressive performance. For the first time, the W2A16 model showcases performance on par with the existing W3A16 quantized model while exhibiting superior potential for hardware compatibility. Furthermore, our W2A16 LLaMA-2 7B outperforms FP16 LLaMA-3B on several open evaluation tasks with a 3.09x and 5.68x compression ratio to 3B and 7B LLaMA respectively. Happy trying!
+[09/12/2023] We are happy to announce the release of the 2-bit LLaMA-2 7B (W2A16 g32/g8) models.
 
-#### 08/31/2023
-We are happy to release the harness benchmarks on 14 zero-shot tasks based on our 2-bit models. Happy trying 😃🚀!!
+[08/31/2023] We are happy to release the harness benchmarks on 14 zero-shot tasks based on our 2-bit models. Happy trying 😃🚀.
 
-#### 08/16/2023
-We are happy to release the 2-bit OpenLLaMA 3B models, which are quantized into 2-bit representation yet still with strong performance 😃⭐.
+[08/16/2023] We are happy to release the 2-bit OpenLLaMA 3B models, which are quantized into 2-bit representation yet still with strong performance 😃⭐.
 
 ## Pretrained Model
 | LLM Models            | Method     | Bits | Groupsize | Wikitext2 | C4    | Checkpoint Size (GiB) |
@@ -59,13 +55,13 @@ We are happy to release the 2-bit OpenLLaMA 3B models, which are quantized into 
 | LLM Models                | Method     | Bits | Checkpoint Size (GiB) |
 |:-------------------------:|:----------:|:----:|:---------:|
 | **LLaMA-2-70B-Chat**[^3]  | FP16       |  16  |     130     |                     
-|                           | Ours       |   -  |     -     |    
+|                           |  **Ours**  |   -  |     -     |    
 | **CodeLLaMA-7B**[^7]      | FP16       |  16  |     12.5     |                      
-|                           | Ours       |   -  |     -     |
+|                           |  **Ours**  |   -  |     -     |
 | **CodeLLaMA-13B**[^7]      | FP16       |  16  |     24     |                      
-|                           | Ours       |   -  |     -     |
+|                           |  **Ours**  |   -  |     -     |
 | **CodeLLaMA-34B**[^7]      | FP16       |  16  |     63     |                      
-|                           | Ours       |   -  |     -     |    
+|                           |  **Ours**  |   -  |     -     |    
 
 [^1]: [OpenLLaMA](https://github.com/openlm-research/open_llama)
 [^2]: [LLaMA-1](https://arxiv.org/abs/2302.13971)
