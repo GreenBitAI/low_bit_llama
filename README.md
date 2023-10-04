@@ -60,7 +60,7 @@ We are happy to release the 2-bit OpenLLaMA 3B models, which are quantized into 
 |:-------------------------:|:----------:|:----:|:---------:|
 | **LLaMA-2-70B-Chat**[^3]  | FP16       |  16  |     130     |                     
 |                           | Ours       |   2  |     -     |    
-| **CodeLLaMA-7B**[^7]      | FP16       |  16  |     12.9     |                      
+| **CodeLLaMA-7B**[^7]      | FP16       |  16  |     12.5     |                      
 |                           | Ours       |   2  |     -     |    
 
 [^1]: [OpenLLaMA](https://github.com/openlm-research/open_llama)
