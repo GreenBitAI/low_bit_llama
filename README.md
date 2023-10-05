@@ -1,6 +1,6 @@
 # GreenBit LLaMA
 
-This is GreenBitAI's research code for running **1-bit** and **2-bit** LLaMA models with extreme compression yet still strong performance.
+This is GreenBitAI's research code for running **2-bit** and **1-bit** LLaMA models with extreme compression yet still strong performance.
 
 This is meant to be a research demo for the quality of the model.
 There is no speed-up implemented yet.
@@ -37,7 +37,7 @@ Additionally, we are considering the provision of low-bit versions for other ope
 |                           | OmniQuant[^5]|   2  |     64    |      10.56| 13.77 |           -           |
 |                           | [**Ours**](https://huggingface.co/GreenBitAI/LLaMA-2-7B-4bit-groupsize32)   |   4  |     32    |      5.55 |  7.08 |         3.7           |
 |                           | [**Ours**](https://huggingface.co/GreenBitAI/LLaMA-2-7B-2bit-groupsize8)   |   2  |      8    |      6.09 |  7.63 |         2.9           |
-|                           | [**Ours**](https://huggingface.co/GreenBitAI/LLaMA-2-7B-2bit-groupsize32)   |   2  |     32    |      7.13 |  8.68 |         2.2           |
+|                           | [**Ours**](https://huggingface.co/GreenBitAI/LLaMA-2-7B-2bit-groupsize32)   |   2  |     32    |      7.13 |  8.67 |         2.2           |
 | **LLaMA-1-7B**[^2]        | FP16       |  16  |     -     |      5.67 |  7.07 |        12.5           |
 |                           | GPTQ[^4]   |   4  |    128    |      5.85 |  7.21 |         3.6           |
 |                           | GPTQ[^4]   |   3  |    128    |      6.61 |  7.85 |         3.0           |
