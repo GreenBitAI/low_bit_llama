@@ -26,30 +26,29 @@ class QuantLinear(nn.Module):
         
         self.asym = asym
         
-
         self.disable_bias = True
         self.initialize(in_features, out_features, groupsize, double_groupsize, bits, v1, asym)
 
     def initialize(self, in_features, out_features, groupsize, double_quantize_groupsize, bits, v1, asym):
 
         if asym:
-            self.register_buffer('qzeros', torch.empty(math.ceil(in_features/groupsize), math.ceil(out_features / 256 * (bits * 8)), dtype=torch.int32))
+            self.register_buffer('qzeros', torch.empty((math.ceil(in_features/groupsize), math.ceil(out_features / 256 * (bits * 8))), dtype=torch.int32))
             if bits == 4:
-                self.register_buffer('qscales', torch.empty(math.ceil(in_features/groupsize), math.ceil(out_features/double_quantize_groupsize), double_quantize_groupsize), torch.uint8)
+                self.register_buffer('qscales', torch.empty((math.ceil(in_features/groupsize), math.ceil(out_features/double_quantize_groupsize), double_quantize_groupsize), dtype=torch.uint8))
             else:
-                self.register_buffer('qscales', torch.empty(math.ceil(in_features/groupsize), out_features), torch.uint8)
+                self.register_buffer('qscales', torch.empty((math.ceil(in_features/groupsize), out_features), dtype=torch.uint8))
 
         else:
-            self.register_buffer('qstatistic', torch.empty(math.ceil(in_features/groupsize), math.ceil(out_features/double_quantize_groupsize), double_quantize_groupsize), torch.uint8)
-            self.register_buffer('qzeros_zeros', torch.empty((math.ceil(in_features/groupsize), math.ceil(out_features/double_quantize_groupsize), 1)))
-            self.register_buffer('qzeros_scales', torch.empty((math.ceil(in_features/groupsize), math.ceil(out_features/double_quantize_groupsize), 1)))
+            self.register_buffer('qstatistic', torch.empty((math.ceil(in_features/groupsize), math.ceil(out_features/double_quantize_groupsize), double_quantize_groupsize), dtype=torch.uint8))
+            self.register_buffer('qzeros_zeros', torch.empty((math.ceil(in_features/groupsize), math.ceil(out_features/double_quantize_groupsize), 1), dtype=torch.half))
+            self.register_buffer('qzeros_scales', torch.empty((math.ceil(in_features/groupsize), math.ceil(out_features/double_quantize_groupsize), 1), dtype=torch.half))
 
         if not v1:
-            self.register_buffer('qscales_zeros', torch.empty(math.ceil(in_features/groupsize), math.ceil(out_features/double_quantize_groupsize), 1, dtype=torch.half))
-            self.register_buffer('qscales_scales', torch.empty(math.ceil(in_features/groupsize), math.ceil(out_features/double_quantize_groupsize), 1, dtype=torch.half))
+            self.register_buffer('qscales_zeros', torch.empty((math.ceil(in_features/groupsize), math.ceil(out_features/double_quantize_groupsize), 1), dtype=torch.half))
+            self.register_buffer('qscales_scales', torch.empty((math.ceil(in_features/groupsize), math.ceil(out_features/double_quantize_groupsize), 1), dtype=torch.half))
         else:
-            self.register_buffer('qscales_zeros', torch.empty(1, out_features, 1)) 
-            self.register_buffer('qscales_scales', torch.empty(1, out_features, 1))
+            self.register_buffer('qscales_zeros', torch.empty((1, out_features, 1), dtype=torch.half)) 
+            self.register_buffer('qscales_scales', torch.empty((1, out_features, 1), dtype=torch.half))
 
         self.register_buffer('g_idx', torch.tensor([i // groupsize  for i in range(in_features)], dtype=torch.int32))
         self.register_buffer('qweight', torch.empty(math.ceil(in_features / 256 * (bits * 8)), out_features, dtype=torch.int32))
@@ -147,14 +146,16 @@ def load_llama_model(model_uri, cache_dir, groupsize=-1, double_groupsize=-1, bi
         for name in ['lm_head']:
             if name in layers:
                 del layers[name]
-        make_quant(model, layers, groupsize=groupsize, double_groupsize=double_groupsize, bits=bits, v1=v1, asym=asym)
-
+            make_quant(model, layers, groupsize=groupsize, double_groupsize=double_groupsize, bits=bits, v1=v1, asym=asym)
+    
     model = accelerate.load_checkpoint_and_dispatch(
         model=model,
         checkpoint=hf_hub_download(repo_id=model_uri, filename="pytorch_model.bin", cache_dir=cache_dir),
         device_map=device_map,
         no_split_module_classes=["LlamaDecoderLayer"]
     )
+    
+    print(Style.BRIGHT + Fore.YELLOW + 'Total {:.2f} Gib VRAM used.'.format(torch.cuda.memory_allocated() / 1024 / 1024 / 1024))
 
     model.seqlen = seqlen
 
