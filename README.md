@@ -57,7 +57,7 @@ Additionally, we are considering the provision of low-bit versions for other ope
 | LLM Models                | Method     | Bits | Checkpoint Size (GiB) |
 |:-------------------------:|:----------:|:----:|:---------:|
 | **LLaMA-2-70B-Chat**[^3]  | FP16       |  16  |     130     |                     
-|                           |  **Ours**  |   -  |     -     |    
+|                           |  [**Ours**](https://huggingface.co/GreenBitAI/LLaMA-2-70B-CHAT-2bit-groupsize8)  |   2  |     26.9     |    
 | **CodeLLaMA-7B**[^7]      | FP16       |  16  |     12.5     |                      
 |                           |  **Ours**  |   -  |     -     |
 | **CodeLLaMA-13B**[^7]      | FP16       |  16  |     24     |                      

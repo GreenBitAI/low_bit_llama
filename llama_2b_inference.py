@@ -10,7 +10,7 @@ if not torch.cuda.is_available():
     sys.exit(0)
 
 parser = argparse.ArgumentParser("Run inference with low-bit LLaMA models.")
-parser.add_argument("-s", "--model-size", choices=["1.1b", "1.1B", "3b", "3B", "7b", "7B", "13b", "13B"], required=False, default="7B", type=str, help="Which model size to use.")
+parser.add_argument("-s", "--model-size", choices=["1.1b", "1.1B", "3b", "3B", "7b", "7B", "13b", "13B", "30b", "30B", "70b", "70B", "70b-chat", "70B-Chat"], required=False, default="7B", type=str, help="Which model size to use.")
 parser.add_argument("-v", "--llama-version", choices=[1, 2], required=False, default=1, type=int, help="which version to evaluate")
 parser.add_argument("-g", "--groupsize", choices=[8, 16, 32], required=False, default=32, type=int, help="Specify quantization groups")
 
@@ -26,7 +26,7 @@ if args.llama_version == 1:
 else: 
     model_uri = f'GreenBitAI/LLaMA-2-{args.model_size}-2bit' 
  
-    if args.model_size in ["1.1b", "1.1B", "3b", "3B", "7b", "7B", "70b", "70B"]: 
+    if args.model_size in ["1.1B", "7B", "70B", "70B-CHAT"]: 
         model_uri = model_uri + f'-groupsize{args.groupsize}' 
     else: 
         raise NotImplemented
@@ -62,7 +62,11 @@ cache_dir = './cache'
 model, tokenizer = load_llama_model(model_uri, cache_dir=cache_dir, groupsize=args.groupsize, double_groupsize=double_groupsize, v1=v1, bits=2, half=True, asym=asym)
 model.eval()
 
-prompt = '''The meaning of life is'''
+if "CHAT" in args.model_size:
+    prompt = '''You are a helpful assistant, please tell me the meaning of life.'''
+else:
+    prompt = '''The meaning of life is'''
+
 batch = tokenizer(prompt, return_tensors="pt", add_special_tokens=False)
 
 batch = {k: v.cuda() for k, v in batch.items()}
@@ -75,7 +79,7 @@ for i in range(10):
             do_sample=True,
             use_cache=True,
             repetition_penalty=1.5,
-            max_new_tokens=100,
+            max_new_tokens=256,
             temperature=0.9,
             top_p=0.95,
             top_k=20,
