@@ -114,14 +114,11 @@ pip install -r requirements.txt
 
 Use the environment variable `CUDA_VISIBLE_DEVICES` to select the correct GPU.
 Multi-GPU is not supported, but the model is very compressed, so 1 GPU should be enough.
-To use the instruction-tuned model, you can use the following commands.
-Use the `-s` option to select the model size (default is 7B) and `-h` to check for options.
-
-If you want to evaluate or do inference on the base model, you can use the following commands
-in scripts. Everything is already there:
+To use the instruction-tuned model, you can use the following commands
+in ```scripts/```. Predefined scripts already there:
 
 ```bash
-bash scripts/evaluation/tiny_llama_w2a16g32.sh    # for open task evaluation of the base model.
+bash scripts/evaluate/tiny_llama_w2a16g32.sh    # for open task evaluation of the base model.
 bash scripts/inference/llama_2_70b_w2a16g8.sh     # for text generation inference of the base model.
 bash scripts/instruction-chat/llama_2_70b_w2a16g8.sh  # for instruction following chat of the fine-tuned model.
 ```
