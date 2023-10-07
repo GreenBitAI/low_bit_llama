@@ -1,6 +1,6 @@
 # GreenBit LLaMA
 
-This is GreenBitAI's research code for running **2-bit** and **1-bit** LLaMA models with extreme compression yet still strong performance.
+This is GreenBitAI's research code for running **2-bit** and **1-bit** LLaMA models with extreme compression yet still strong performance, the quantized models are available on the [model zoo](https://huggingface.co/GreenBitAI?sort_models=downloads#models).
 
 This is meant to be a research demo for the quality of the model.
 There is no speed-up implemented yet.
