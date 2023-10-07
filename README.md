@@ -119,8 +119,8 @@ in ```scripts/```. Predefined scripts already there:
 
 ```bash
 bash scripts/evaluate/tiny_llama_w2a16g32.sh    # for open task evaluation of the base model.
-bash scripts/inference/llama_2_70b_w2a16g8.sh     # for text generation inference of the base model.
-bash scripts/instruction-chat/llama_2_70b_w2a16g8.sh  # for instruction following chat of the fine-tuned model.
+bash scripts/inference/llama2_70b_w2a16g8.sh     # for text generation inference of the base model.
+bash scripts/instruction-chat/llama2_70b_w2a16g8.sh  # for instruction following chat of the fine-tuned model.
 ```
 
 # References
