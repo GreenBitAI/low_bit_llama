@@ -25,7 +25,7 @@ Additionally, we are considering the provision of low-bit versions for other ope
 | LLM Models            | Method     | Bits | Groupsize | Wikitext2 | C4    | Checkpoint Size (GiB) |
 |:-------------------------:|:----------:|:----:|:---------:|:---------:|:-----:|:---------------------:|
 | **LLaMA-2-70B**[^3]        | FP16       |  16  |     -     |      3.31 |  5.70 |        130           |                   
-|                           | [**Ours**](https://huggingface.co/GreenBitAI/LLaMA-2-70B-2bit-groupsize8)   |   2  |     8    |      4.06 |  6.15 |         26.9           |
+|                           | [**Ours**](https://huggingface.co/GreenBitAI/LLaMA-2-70B-2bit-groupsize8)   |   2  |     8    |      3.87 |  5.96 |         26.9           |
 | **LLaMA-1-30B**[^3]        | FP16       |  16  |     -     |      4.10 |  5.98 |        60.5          |
 |                           | [**Ours**](https://huggingface.co/GreenBitAI/LLaMA-30B-2bit-groupsize8)   |   2  |     8    |      4.75 |  6.57 |         12.9           |
 | **LLaMA-2-7B**[^3]        | FP16       |  16  |     -     |      5.47 |  6.97 |        12.5           |

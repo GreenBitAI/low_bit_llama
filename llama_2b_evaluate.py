@@ -47,7 +47,7 @@ if bits == 2:
         if args.groupsize == 32:
             double_groupsize=32
         else:
-            if args.llama_version == 1:
+            if args.llama_version == 1 and args.model_size not in ["30b", "30B"]:
                 double_groupsize=64
             else:
                 double_groupsize=32
