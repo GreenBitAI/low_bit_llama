@@ -19,7 +19,7 @@ parser.add_argument("-g", "--groupsize", choices=[8], required=False, default=8,
 args = parser.parse_args()
 args.model_size = args.model_size.upper()
 
-model_uri = f'GreenBitAI/codellama-{args.model_size}-w2g16g{args.groupsize}'
+model_uri = f'GreenBitAI/codellama-{args.model_size}-w2a16g{args.groupsize}'
 
 asym = False
 bits = 2
