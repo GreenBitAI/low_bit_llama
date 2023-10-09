@@ -63,7 +63,7 @@ Additionally, we are considering the provision of low-bit versions for other ope
 | **CodeLLaMA-13B**[^7]      | FP16       |  16  |     24     |                      
 |                           |  **Ours**  |   -  |     -     |
 | **CodeLLaMA-34B**[^7]      | FP16       |  16  |     63     |                      
-|                           |  **Ours**  |   -  |     -     |    
+|                           |  [**Ours**](https://huggingface.co/GreenBitAI/codellama-34B-w2g16g8)  |   2  |     13.5     |    
 
 [^1]: [OpenLLaMA](https://github.com/openlm-research/open_llama)
 [^2]: [LLaMA-1](https://arxiv.org/abs/2302.13971)
@@ -121,6 +121,7 @@ in ```scripts/```. Predefined scripts already there:
 bash scripts/evaluate/tiny_llama_w2a16g32.sh    # for open task evaluation of the base model.
 bash scripts/inference/llama2_70b_w2a16g8.sh     # for text generation inference of the base model.
 bash scripts/instruction-chat/llama2_70b_w2a16g8.sh  # for instruction following chat of the fine-tuned model.
+bash scripts/inference/codellama_34b_w2a16g8.sh         # for text generation inference of the codellama model
 ```
 
 # References
