@@ -57,13 +57,13 @@ Additionally, we are considering the provision of low-bit versions for other ope
 | LLM Models                | Method     | Bits | Checkpoint Size (GiB) |
 |:-------------------------:|:----------:|:----:|:---------:|
 | **LLaMA-2-70B-Chat**[^3]  | FP16       |  16  |     130     |                     
-|                           |  [**Ours**](https://huggingface.co/GreenBitAI/LLaMA-2-70B-CHAT-2bit-groupsize8)  |   2  |     26.9     |    
-| **CodeLLaMA-7B**[^7]      | FP16       |  16  |     12.5     |                      
-|                           |  **Ours**  |   -  |     -     |
-| **CodeLLaMA-13B**[^7]      | FP16       |  16  |     24     |                      
-|                           |  **Ours**  |   -  |     -     |
+|                           |  [**Ours**](https://huggingface.co/GreenBitAI/LLaMA-2-70B-CHAT-2bit-groupsize8)  |   2  |     26.9     | 
 | **CodeLLaMA-34B**[^7]      | FP16       |  16  |     63     |                      
 |                           |  [**Ours**](https://huggingface.co/GreenBitAI/codellama-34B-w2g16g8)  |   2  |     13.5     |    
+| **CodeLLaMA-34B-Python**[^7]      | FP16       |  16  |     63     |                      
+|                           |  **Ours**  |   -  |     -     |
+| **CodeLLaMA-34B-Instruction**[^7]      | FP16       |  16  |     63     |                      
+|                           |  **Ours**  |   -  |     -     |
 
 [^1]: [OpenLLaMA](https://github.com/openlm-research/open_llama)
 [^2]: [LLaMA-1](https://arxiv.org/abs/2302.13971)
