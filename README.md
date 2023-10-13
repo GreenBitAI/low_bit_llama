@@ -61,7 +61,7 @@ Additionally, we are considering the provision of low-bit versions for other ope
 | **CodeLLaMA-34B**[^7]      | FP16       |  16  |     63     |                      
 |                           |  [**Ours**](https://huggingface.co/GreenBitAI/codellama-34B-w2g16g8)  |   2  |     13.5     |    
 | **CodeLLaMA-34B-Python**[^7]      | FP16       |  16  |     63     |                      
-|                           |  **Ours**  |   -  |     -     |
+|                           |  [**Ours**](https://huggingface.co/GreenBitAI/codellama-python-34B-w2a16g8)  |   2  |     13.5     |
 | **CodeLLaMA-34B-Instruction**[^7]      | FP16       |  16  |     63     |                      
 |                           |  **Ours**  |   -  |     -     |
 
