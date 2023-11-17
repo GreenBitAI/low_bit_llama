@@ -11,7 +11,7 @@ if not torch.cuda.is_available():
     print("CUDA is needed to run the model.")
     sys.exit(0)
 
-parser = argparse.ArgumentParser("Run inference with low-bit LLaMA models.")
+parser = argparse.ArgumentParser("Run evaluation with low-bit Yi models.")
 parser.add_argument("-s", "--model-size", choices=["6b", "6B", "34b", "34B"], required=False, default="34B", type=str, help="Which model size to use.")
 parser.add_argument("-b", "--wbits", choices=[2,4], required=False, default=2, type=int, help="which weight bit to evaluate")
 parser.add_argument("-g", "--groupsize", choices=[8, 32], required=False, default=8, type=int, help="Specify quantization groups")
@@ -37,8 +37,8 @@ _, wikitext2_testloader = get_loaders('wikitext2', model=model_uri, cache_dir=ca
 llama_eval(model, wikitext2_testloader)
 
 print("Loading dataset 'ptb' for evaluation...")
-_, ptb_testloader = get_loaders('ptb', model=model_uri, cache_dir=cache_dir, nsamples=128, seed=0, seqlen=2048)
-llama_eval(model, ptb_testloader)
+_, wikitext2_testloader = get_loaders('ptb', model=model_uri, cache_dir=cache_dir, nsamples=128, seed=0, seqlen=2048)
+llama_eval(model, wikitext2_testloader)
 
 prompt = '''The difference between python and C++:'''
 
