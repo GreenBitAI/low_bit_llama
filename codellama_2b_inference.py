@@ -12,7 +12,7 @@ if not torch.cuda.is_available():
     sys.exit(0)
 
 parser = argparse.ArgumentParser("Run inference with low-bit LLaMA models.")
-parser.add_argument("-s", "--model-size", choices=["34B", "python-34B"], required=False, default="34B", type=str, help="Which model size to use.")
+parser.add_argument("-s", "--model-size", choices=["34B", "python-34B", "instruction-34B"], required=False, default="34B", type=str, help="Which model size to use.")
 parser.add_argument("-v", "--llama-version", choices=[2], required=False, default=2, type=int, help="which version to evaluate")
 parser.add_argument("-g", "--groupsize", choices=[8], required=False, default=8, type=int, help="Specify quantization groups")
 
@@ -47,7 +47,7 @@ for i in range(10):
             do_sample=True,
             use_cache=True,
             repetition_penalty=1.5,
-            max_new_tokens=256,
+            max_new_tokens=512,
             temperature=0.8,
             top_p=0.95,
             top_k=20,

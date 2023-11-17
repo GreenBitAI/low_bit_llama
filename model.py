@@ -1,3 +1,4 @@
+import os
 import math
 import time
 from pathlib import Path
@@ -96,18 +97,24 @@ class QuantLinear(nn.Module):
         return out
 
 
-def make_quant(module, names, name='', groupsize=-1, double_groupsize=-1, bits=4, v1=True, asym=True):
+def make_quant(module, names, name='', groupsize=-1, double_groupsize=-1, bits=4, v1=True, asym=True, kquant=False):
     if isinstance(module, QuantLinear):
         return
     for attr in dir(module):
         tmp = getattr(module, attr)
         name1 = name + '.' + attr if name != '' else attr
         if name1 in names:
+            if kquant and ("v_proj" in name1 or "down_proj" in name1):
+                wbits = int(bits*2)
+                kgroupsize = 32
+            else:
+                wbits = bits
+                kgroupsize = groupsize
             setattr(
-                module, attr, QuantLinear(tmp.in_features, tmp.out_features, groupsize=groupsize, double_groupsize=double_groupsize, bits=bits, v1=v1, asym=asym)
+                module, attr, QuantLinear(tmp.in_features, tmp.out_features, groupsize=kgroupsize, double_groupsize=double_groupsize, bits=wbits, v1=v1, asym=asym)
             )
     for name1, child in module.named_children():
-        make_quant(child, names, name + '.' + name1 if name != '' else name1, groupsize=groupsize, double_groupsize=double_groupsize, bits=bits, v1=v1, asym=asym)
+        make_quant(child, names, name + '.' + name1 if name != '' else name1, groupsize=groupsize, double_groupsize=double_groupsize, bits=bits, v1=v1, asym=asym, kquant=kquant)
 
 
 def model_to_half(model):
@@ -131,26 +138,36 @@ def find_layers(module, layers=[nn.Conv2d, nn.Linear], name=''):
     return res
 
 
-def load_llama_model(model_uri, cache_dir, groupsize=-1, double_groupsize=-1, bits=4, half=False, v1=True, asym=False, device_map="auto", seqlen=2048):
+def load_llama_model(model_uri, cache_dir, groupsize=-1, double_groupsize=-1, bits=4, half=False, v1=True, asym=False, device_map="auto", seqlen=2048, kquant=False, return_config=False):
     import accelerate
-    from transformers import LlamaConfig, LlamaForCausalLM, LlamaTokenizer
-
+    from transformers import LlamaConfig, AutoModel, AutoModelForCausalLM, AutoTokenizer, LlamaForCausalLM, LlamaTokenizer
+    from transformers.utils.hub import cached_file
     print(Style.BRIGHT + Fore.CYAN + "Loading Model ...")
     t0 = time.time()
 
     with accelerate.init_empty_weights():
         config = LlamaConfig.from_pretrained(model_uri, cache_dir=cache_dir)
         model = LlamaForCausalLM(config)
+        _ = AutoModel.from_pretrained(model_uri, torch_dtype=torch.float16, cache_dir=cache_dir, trust_remote_code=True)
+        model_path = os.path.join(cache_dir, "models--" + model_uri.replace("/", "--"), "snapshots/")
+        subdirectories = [d for d in os.listdir(model_path) if os.path.isdir(os.path.join(model_path, d))]
+        model_path = os.path.join(model_path, subdirectories[0])
+
         model = model.eval()
-        layers = find_layers(model)
-        for name in ['lm_head']:
-            if name in layers:
-                del layers[name]
-            make_quant(model, layers, groupsize=groupsize, double_groupsize=double_groupsize, bits=bits, v1=v1, asym=asym)
+        for i, layer in enumerate(model.model.layers):
+            layers = find_layers(layer)
+            for name in ['lm_head']:
+                if name in layers:
+                    del layers[name]
+                if kquant and (bits == 2) and (i >=len(model.model.layers)-3):
+                    r_kquant=True
+                else:
+                    r_kquant=False
+                make_quant(layer, layers, groupsize=groupsize, double_groupsize=double_groupsize, bits=bits, v1=v1, asym=asym, kquant=r_kquant)
     
     model = accelerate.load_checkpoint_and_dispatch(
         model=model,
-        checkpoint=hf_hub_download(repo_id=model_uri, filename="pytorch_model.bin", cache_dir=cache_dir),
+        checkpoint=model_path,
         device_map=device_map,
         no_split_module_classes=["LlamaDecoderLayer"]
     )
@@ -162,13 +179,15 @@ def load_llama_model(model_uri, cache_dir, groupsize=-1, double_groupsize=-1, bi
     if half:
         model_to_half(model)
 
-    tokenizer = LlamaTokenizer.from_pretrained(model_uri, cache_dir=cache_dir)
+    tokenizer = AutoTokenizer.from_pretrained(model_uri, cache_dir=cache_dir, trust_remote_code=True)
     tokenizer.truncation_side = 'left'
 
     print(Style.BRIGHT + Fore.GREEN + f"Loaded the model in {(time.time()-t0):.2f} seconds.")
-
-    return model, tokenizer
-
+    
+    if return_config:
+        return model, tokenizer, config
+    else:
+        return model, tokenizer
 
 def load_llama_model_lora(model_uri, lora_uri, cache_dir, bits = 32, groupsize=-1, device_map="auto", seqlen=2048, max_memory=None):
     import accelerate
