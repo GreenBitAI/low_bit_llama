@@ -16,7 +16,7 @@ Additionally, we are considering the provision of low-bit versions for other ope
 ## Few Shot Evaluation (officially evaluated by 01-Yi)
 | Model          | Yi-34B FP16| [Yi-34B 4 bit](https://huggingface.co/GreenBitAI/yi-34b-w4a16g32) | Yi-6B FP16 | [Yi-6B 4 bit](https://huggingface.co/GreenBitAI/yi-6b-w4a16g32) |
 |----------------|-----------|----------|----------|---------|
-| GroupSize      | -         | 32       | 8        | -       |
+| GroupSize      | -         | 32       | -        | 8       |
 | Model Size (GB)| 68.79     | 19.89    | 12.12    | 4.04    |
 | AVG            | 70.64     | 69.7     | 60.11    | 59.14   |
 | **Detailed Evaluation** | | | | |
@@ -68,7 +68,6 @@ Additionally, we are considering the provision of low-bit versions for other ope
 | record        | f1     | 0.904   | 0.9011      | 0.924        |
 |               | em     | 0.8962  | 0.8927      | 0.916        |
 | Average       |        | 0.596   | 0.5937      | 0.6708       |
-
 
 ## Requirements
 
