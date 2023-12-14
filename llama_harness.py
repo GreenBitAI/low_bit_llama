@@ -1,3 +1,4 @@
+import os
 import argparse
 import sys
 
@@ -84,7 +85,9 @@ lm.reinitial()
 
 print("start harness evaluation")
 results={}
-logger = create_logger(Path("../log/"))
+if not os.path.exists("./log"):
+    os.mkdir("./log")
+logger = create_logger(Path("./log"))
 t_results = evaluator.simple_evaluate(
             lm,
             tasks=args.tasks,

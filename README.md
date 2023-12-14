@@ -86,7 +86,8 @@ To use the instruction-tuned model, you can use the following commands
 in ```scripts/```. Predefined scripts already there:
 
 ```bash
-bash scripts/harness/yi_6b_w4a16g32_harness.sh         # for zero shot evaluation of the lossless 4-bit 01-yi model
+bash scripts/harness/yi_6b_w4a16g32_harness.sh         # for zero shot evaluation of the lossless 4-bit 01-yi 6b model
+bash scripts/harness/yi_34b_w4a16g32_harness.sh         # for zero shot evaluation of the lossless 4-bit 01-yi 34b model
 ```
 
 # References
