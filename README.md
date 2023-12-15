@@ -82,7 +82,7 @@ pip install -r requirements.txt
 
 Use the environment variable `CUDA_VISIBLE_DEVICES` to select the correct GPU.
 Multi-GPU is not supported, but the model is very compressed, so 1 GPU should be enough.
-To use the instruction-tuned model, you can use the following commands
+To evaluate the compressed model on the harness, you can use the following commands
 in ```scripts/```. Predefined scripts already there:
 
 ```bash
