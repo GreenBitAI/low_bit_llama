@@ -11,7 +11,7 @@ Over the next few months, we will continue offering 2-bit and 1-bit versions of 
 Additionally, we are considering the provision of low-bit versions for other open-source LLMs in the future.
 
 ## Latest Updates
-[14/12/2023] We are happy to release the lossless (<1%) W4A16 01-Yi models ([low_bit_yi](https://github.com/GreenBitAI/low_bit_llama/tree/low_bit_yi) branch). The 2-bit version will be made open soon.
+[12/14/2023] We are happy to release the lossless (<1%) W4A16 01-Yi models ([low_bit_yi](https://github.com/GreenBitAI/low_bit_llama/tree/low_bit_yi) branch). The 2-bit version will be made open soon.
 
 [10/04/2023] We are happy to release the W2A16 g8/32 TinyLLaMA-1.1B models.
 
