@@ -140,15 +140,15 @@ def find_layers(module, layers=[nn.Conv2d, nn.Linear], name=''):
 
 def load_llama_model(model_uri, cache_dir, groupsize=-1, double_groupsize=-1, bits=4, half=False, v1=True, asym=False, device_map="auto", seqlen=2048, kquant=False, return_config=False):
     import accelerate
-    from transformers import LlamaConfig, AutoModel, AutoModelForCausalLM, AutoTokenizer, LlamaForCausalLM, LlamaTokenizer
+    from transformers import LlamaConfig, AutoConfig, AutoModel, AutoModelForCausalLM, AutoTokenizer, LlamaForCausalLM, LlamaTokenizer
     from transformers.utils.hub import cached_file
     print(Style.BRIGHT + Fore.CYAN + "Loading Model ...")
     t0 = time.time()
 
     with accelerate.init_empty_weights():
-        config = LlamaConfig.from_pretrained(model_uri, cache_dir=cache_dir)
-        model = LlamaForCausalLM(config)
-        _ = AutoModel.from_pretrained(model_uri, torch_dtype=torch.float16, cache_dir=cache_dir, trust_remote_code=True)
+        config = AutoConfig.from_pretrained(model_uri, cache_dir=cache_dir)
+        model = AutoModelForCausalLM.from_config(config)
+        _ = AutoModel.from_pretrained(model_uri, torch_dtype=torch.float16, cache_dir=cache_dir, trust_remote_code=False)
         model_path = os.path.join(cache_dir, "models--" + model_uri.replace("/", "--"), "snapshots/")
         subdirectories = [d for d in os.listdir(model_path) if os.path.isdir(os.path.join(model_path, d))]
         model_path = os.path.join(model_path, subdirectories[0])
@@ -178,10 +178,9 @@ def load_llama_model(model_uri, cache_dir, groupsize=-1, double_groupsize=-1, bi
 
     if half:
         model_to_half(model)
-
-    tokenizer = AutoTokenizer.from_pretrained(model_uri, cache_dir=cache_dir, trust_remote_code=True)
-    tokenizer.truncation_side = 'left'
-
+    
+    tokenizer = AutoTokenizer.from_pretrained(model_uri, cache_dir=cache_dir, use_fast=False, trust_remote_code=True)
+    
     print(Style.BRIGHT + Fore.GREEN + f"Loaded the model in {(time.time()-t0):.2f} seconds.")
     
     if return_config:

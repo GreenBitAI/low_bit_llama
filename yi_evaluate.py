@@ -15,11 +15,15 @@ parser = argparse.ArgumentParser("Run evaluation with low-bit Yi models.")
 parser.add_argument("-s", "--model-size", choices=["6b", "6B", "34b", "34B"], required=False, default="34B", type=str, help="Which model size to use.")
 parser.add_argument("-b", "--wbits", choices=[2,4], required=False, default=2, type=int, help="which weight bit to evaluate")
 parser.add_argument("-g", "--groupsize", choices=[8, 32], required=False, default=8, type=int, help="Specify quantization groups")
+parser.add_argument("-c", "--chat", action="store_true", required=False, help="Specify chating model")
 
 args = parser.parse_args()
 args.model_size = args.model_size.lower()
 
-model_uri = f'GreenBitAI/yi-{args.model_size}-w{args.wbits}a16g{args.groupsize}'
+if args.chat:
+    model_uri = f'GreenBitAI/yi-{args.model_size}-chat-w{args.wbits}a16g{args.groupsize}'
+else:
+    model_uri = f'GreenBitAI/yi-{args.model_size}-w{args.wbits}a16g{args.groupsize}'
 
 asym = False
 bits = args.wbits
@@ -33,11 +37,11 @@ model, tokenizer = load_llama_model(model_uri, cache_dir=cache_dir, groupsize=ar
 model.eval()
 
 print("Loading dataset 'wikitext2' for evaluation...")
-_, wikitext2_testloader = get_loaders('wikitext2', model=model_uri, cache_dir=cache_dir, nsamples=128, seed=0, seqlen=2048)
+_, wikitext2_testloader = get_loaders('wikitext2', model=model_uri, cache_dir=cache_dir, nsamples=128, seed=0, seqlen=2048, tokenizer=tokenizer)
 llama_eval(model, wikitext2_testloader)
 
 print("Loading dataset 'ptb' for evaluation...")
-_, ptb_testloader = get_loaders('ptb', model=model_uri, cache_dir=cache_dir, nsamples=128, seed=0, seqlen=2048)
+_, ptb_testloader = get_loaders('ptb', model=model_uri, cache_dir=cache_dir, nsamples=128, seed=0, seqlen=2048, tokenizer=tokenizer)
 llama_eval(model, ptb_testloader)
 
 prompt = '''The difference between python and C++:'''
