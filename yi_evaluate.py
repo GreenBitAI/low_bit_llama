@@ -35,7 +35,7 @@ cache_dir = './cache'
 
 model, tokenizer = load_llama_model(model_uri, cache_dir=cache_dir, groupsize=args.groupsize, double_groupsize=double_groupsize, bits=bits, half=True, v1=v1, asym=asym, kquant=kquant)
 model.eval()
-
+'''
 print("Loading dataset 'wikitext2' for evaluation...")
 _, wikitext2_testloader = get_loaders('wikitext2', model=model_uri, cache_dir=cache_dir, nsamples=128, seed=0, seqlen=2048, tokenizer=tokenizer)
 llama_eval(model, wikitext2_testloader)
@@ -43,8 +43,8 @@ llama_eval(model, wikitext2_testloader)
 print("Loading dataset 'ptb' for evaluation...")
 _, ptb_testloader = get_loaders('ptb', model=model_uri, cache_dir=cache_dir, nsamples=128, seed=0, seqlen=2048, tokenizer=tokenizer)
 llama_eval(model, ptb_testloader)
-
-prompt = '''The difference between python and C++:'''
+'''
+prompt = '''python和C++的区别:'''
 
 batch = tokenizer(prompt, return_tensors="pt", add_special_tokens=False)
 
@@ -65,8 +65,8 @@ for i in range(10):
             return_dict_in_generate=True,
             output_attentions=False,
             output_hidden_states=False,
-            output_scores=False
+            output_scores=False,
         )
-    result_text = tokenizer.decode(generated['sequences'].cpu().tolist()[0])
+    result_text = tokenizer.decode(generated['sequences'].cpu().tolist()[0], skip_special_tokens=True)
     print(result_text + "\n")
 
